@@ -31,16 +31,15 @@ int main()
 	int lane = 1;
 	int totalNotes = 0;
 	int combo = 0;
-	int loopCounter = 1;
 	float score = 0.0f;
 	float maxScore = 0.0f;
 	float hitAccuracy = 0.0f;
 
 
 	float timePlayed = 0.0f;
-	float length = 0.0f;
 
-	bool gameOver = false;
+	bool gameOver = true;
+	bool start = false;
 	bool hit = false;
 	bool showPerfect = false;
 	bool showGreat = false;
@@ -102,11 +101,17 @@ int main()
 	{
 		// Update
 		//----------------------------------------------------------------------------------
-		UpdateMusicStream(music);
-		
 		timePlayed = GetMusicTimePlayed(music) / GetMusicTimeLength(music) * (screenWidth - 40);
 		if (!gameOver)
 		{
+			if (start)
+			{
+				PlayMusicStream(music);
+				start = false;
+			}
+
+			UpdateMusicStream(music);
+
 			// sync collisions and move notes
 			for (int i = 0; i < totalNotes; ++i)
 			{
@@ -247,6 +252,15 @@ int main()
 			}
 			SetMusicLoopCount(music, 0);
 		}
+		else
+		{
+			PauseMusicStream(music);
+			if (IsKeyPressed(KEY_SPACE))
+			{
+				gameOver = false;
+				start = true;
+			}
+		}
 		//----------------------------------------------------------------------------------
 
 		// Draw
@@ -255,40 +269,49 @@ int main()
 
 		ClearBackground(GRAY);
 		// draw game board
-		for (int i = 0; i < 4; ++i)
-		{
-			DrawRectanglePro(Rectangle{ hitRegion[i].pos.x, hitRegion[i].pos.y, 30, 500 }, Vector2{ 30,0 }, 180, CLITERAL{ 175,175,175,175 }); // guidelines
-			DrawRectangle(hitRegion[i].pos.x, hitRegion[i].pos.y, hitRegion[i].rec.width, hitRegion[i].rec.height, hitRegion[i].color); // hit regions
-
-		}
-		// draw notes
-		for (int i = 0; i < totalNotes; ++i)
+		if (!gameOver)
 		{
 
-			if (note[i].active)
+
+			for (int i = 0; i < 4; ++i)
 			{
-				DrawRectanglePro(note[i].rec, Vector2{ 0,0 }, 0, WHITE);
-			}
-		}
-		// show feedback depending on timing
-		if (showPerfect)
-		{
-			DrawText("Perfect!", GetScreenWidth() / 2 - MeasureText("Perfect!", textSize) / 2, GetScreenHeight() / 2 - 50, textSize, GREEN);
-		}
-		if (showGreat)
-		{
-			DrawText("Great!", GetScreenWidth() / 2 - MeasureText("Great!", textSize) / 2, GetScreenHeight() / 2 - 50, textSize, SKYBLUE);
-		}
-		if (showMiss)
-		{
-			DrawText("Miss", GetScreenWidth() / 2 - MeasureText("Miss", textSize) / 2, GetScreenHeight() / 2 - 50, textSize, RED);
-		}
+				DrawRectanglePro(Rectangle{ hitRegion[i].pos.x, hitRegion[i].pos.y, 30, 500 }, Vector2{ 30,0 }, 180, CLITERAL{ 175,175,175,175 }); // guidelines
+				DrawRectangle(hitRegion[i].pos.x, hitRegion[i].pos.y, hitRegion[i].rec.width, hitRegion[i].rec.height, hitRegion[i].color); // hit regions
 
-		DrawRectangle(20, screenHeight - 20, screenWidth - 40, 12, LIGHTGRAY);
-		DrawRectangle(20, screenHeight - 20, (int)timePlayed, 12, DARKBLUE);
-		DrawRectangleLines(20, screenHeight - 20, screenWidth - 40, 12, GRAY);
-		DrawText(FormatText("SCORE: %i", (int)score), 5, 5, 20, WHITE);
-		DrawText(FormatText("COMBO: %i", combo), 5, 30, 20, WHITE);
+			}
+			// draw notes
+			for (int i = 0; i < totalNotes; ++i)
+			{
+
+				if (note[i].active)
+				{
+					DrawRectanglePro(note[i].rec, Vector2{ 0,0 }, 0, WHITE);
+				}
+			}
+			// show feedback depending on timing
+			if (showPerfect)
+			{
+				DrawText("Perfect!", GetScreenWidth() / 2 - MeasureText("Perfect!", textSize) / 2, GetScreenHeight() / 2 - 50, textSize, GREEN);
+			}
+			if (showGreat)
+			{
+				DrawText("Great!", GetScreenWidth() / 2 - MeasureText("Great!", textSize) / 2, GetScreenHeight() / 2 - 50, textSize, SKYBLUE);
+			}
+			if (showMiss)
+			{
+				DrawText("Miss", GetScreenWidth() / 2 - MeasureText("Miss", textSize) / 2, GetScreenHeight() / 2 - 50, textSize, RED);
+			}
+
+			DrawRectangle(20, screenHeight - 20, screenWidth - 40, 12, LIGHTGRAY);
+			DrawRectangle(20, screenHeight - 20, (int)timePlayed, 12, DARKBLUE);
+			DrawRectangleLines(20, screenHeight - 20, screenWidth - 40, 12, GRAY);
+			DrawText(FormatText("SCORE: %i", (int)score), 5, 5, 20, WHITE);
+			DrawText(FormatText("COMBO: %i", combo), 5, 30, 20, WHITE);
+		}
+		else
+		{
+			DrawText("Press space to play.", GetScreenWidth() / 2 - MeasureText("Press space to play.", 30) / 2, GetScreenHeight() / 2 - 50, 30, WHITE);
+		}
 
 		EndDrawing();
 		//----------------------------------------------------------------------------------
