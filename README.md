@@ -12,7 +12,7 @@ three timings:
 2. Great
 3. Miss
 
-bug(s): song continues to loop
+bug(s): none
 
 Song used:\
 THE DAY - Porno Graffitti
