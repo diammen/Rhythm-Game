@@ -1,10 +1,10 @@
 # Rhythm-Game
 How to play:\
-press R key to hit first lane
+press R key to hit first lane/
 press D key to hit second lane\
 press J key to hit third lane\
 press K key to hit fourth lane\
-wait until the white square lands on the pink square before hitting\\
+wait until the white square lands on the pink square before hitting\
 
 rules:\
 three timings:\
