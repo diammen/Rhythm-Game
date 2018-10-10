@@ -1,6 +1,6 @@
 # Rhythm-Game
 How to play:\
-press R key to hit first lane/
+press R key to hit first lane\
 press D key to hit second lane\
 press J key to hit third lane\
 press K key to hit fourth lane\
