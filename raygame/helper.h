@@ -11,13 +11,19 @@ struct hitRegion
 	Color color;
 };
 
-struct note
+class note
 {
+public:
 	Rectangle rec;
 	Rectangle col;
 	Vector2 pos;
 	bool active;
 	int totalNotes;
+	float timeStamp;
+
+	// ctors & dtors
+	note();
+	~note();
 };
 
 note * readFile(string filePath);

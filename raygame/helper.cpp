@@ -30,7 +30,7 @@ note * readFile(string filePath)
 	// read note position from file
 	for (int i = 0; i < size; ++i)
 	{
-		songFile >> notes[i].rec.x >> notes[i].rec.y;
+		songFile >> notes[i].rec.x >> notes[i].timeStamp;
 		notes[i].rec.x *= 160;
 		notes[i].totalNotes = size;
 	}
@@ -40,4 +40,18 @@ note * readFile(string filePath)
 	songFile.close();
 
 	return notes;
+}
+
+note::note()
+{
+	rec.width = 40;
+	rec.height = 15;
+	col.width = 40;
+	col.height = 15;
+	active = true;
+}
+
+note::~note()
+{
+
 }

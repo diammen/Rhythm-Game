@@ -27,10 +27,10 @@ int main()
 	int screenHeight = 450;
 	int textSize = 50;
 	int frameCounter = 0;
-	int speed = 3;
-	int lane = 1;
+	int speed = 4;
 	int totalNotes = 0;
 	int combo = 0;
+	int bpm = 168;
 	float score = 0.0f;
 	float maxScore = 0.0f;
 	float hitAccuracy = 0.0f;
@@ -45,7 +45,7 @@ int main()
 	bool showGreat = false;
 	bool showMiss = false;
 
-	string path = "TheDay.txt";
+	string path = "test.txt";
 
 	InitWindow(screenWidth, screenHeight, "uso!mania");
 
@@ -59,7 +59,7 @@ int main()
 	maxScore = 100000;
 
 	// location for each hit region
-	Rectangle regionLocation[] = { {160, 400, 30, 10}, {320, 400, 30, 10}, {480, 400, 30, 10}, {640, 400, 30, 10} };
+	Rectangle regionLocation[] = { {160, 400, 40, 15}, {320, 400, 40, 15}, {480, 400, 40, 10}, {640, 400, 40, 10} };
 
 	Music music = LoadMusicStream("bnhaTheDayShorter.ogg");
 
@@ -68,18 +68,9 @@ int main()
 	// initialize notes
 	for (int i = 0; i < totalNotes; ++i)
 	{
+		note[i].rec.y = -15;
 		note[i].pos.y = note[i].rec.y;
 		note[i].col.x = note[i].rec.x;
-		note[i].rec.width = 30;
-		note[i].rec.height = 30;
-		note[i].col.width = 30;
-		note[i].col.height = 30;
-		lane++;
-		if (lane > 4)
-		{
-			lane = 1;
-		}
-		note[i].active = true;
 	}
 
 	// initialize hit regions
@@ -89,7 +80,7 @@ int main()
 		hitRegion[i].pos.x = regionLocation[i].x;
 		hitRegion[i].pos.y = regionLocation[i].y;
 		hitRegion[i].rec = regionLocation[i];
-		hitRegion[i].rec.height = 30;
+		hitRegion[i].rec.height = 15;
 		hitRegion[i].color = PINK;
 	}
 
@@ -115,10 +106,10 @@ int main()
 			// sync collisions and move notes
 			for (int i = 0; i < totalNotes; ++i)
 			{
-				if (note[i].active)
+				if (note[i].active && GetMusicTimePlayed(music) >= note[i].timeStamp)
 					note[i].pos.y += speed;
 				else
-					note[i].pos.y = 0;
+					note[i].pos.y = -15;
 				note[i].rec.y = note[i].pos.y;
 				note[i].col.y = note[i].pos.y;
 				if (note[i].pos.y > screenHeight && note[i].active == true)
@@ -196,7 +187,7 @@ int main()
 					if (hitRegion[j].active)
 					{
 						// if timing is perfect
-						if (abs(note[i].col.y - regionLocation[j].y) < 10 && note[i].col.x == regionLocation[j].x)
+						if (abs(note[i].col.y - regionLocation[j].y) < 4 && note[i].col.x == regionLocation[j].x)
 						{
 							note[i].active = false;
 							showPerfect = true;
@@ -275,7 +266,7 @@ int main()
 
 			for (int i = 0; i < 4; ++i)
 			{
-				DrawRectanglePro(Rectangle{ hitRegion[i].pos.x, hitRegion[i].pos.y, 30, 500 }, Vector2{ 30,0 }, 180, CLITERAL{ 175,175,175,175 }); // guidelines
+				DrawRectanglePro(Rectangle{ hitRegion[i].pos.x, hitRegion[i].pos.y, 40, 500 }, Vector2{ 40,0 }, 180, CLITERAL{ 175,175,175,175 }); // guidelines
 				DrawRectangle(hitRegion[i].pos.x, hitRegion[i].pos.y, hitRegion[i].rec.width, hitRegion[i].rec.height, hitRegion[i].color); // hit regions
 
 			}
