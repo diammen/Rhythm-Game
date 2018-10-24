@@ -27,7 +27,7 @@ int main()
 	int screenHeight = 450;
 	int textSize = 50;
 	int frameCounter = 0;
-	int speed = 250;
+	int speed = 4.5;
 	int totalNotes = 0;
 	int combo = 0;
 	int bpm = 168;
@@ -47,7 +47,7 @@ int main()
 
 	string path = "test.txt";
 
-	InitWindow(screenWidth, screenHeight, "uso!mania");
+	InitWindow(screenWidth, screenHeight, "uso mania");
 
 	InitAudioDevice();
 
@@ -123,7 +123,8 @@ int main()
 				}
 			}
 			// activate one hit region based on input
-			if (IsKeyPressed(KEY_D))
+			// Far Left
+			if (IsKeyPressed(KEY_A))
 			{
 				hit = true;
 				hitRegion[0].active = true;
@@ -133,11 +134,12 @@ int main()
 			{
 				hitRegion[0].active = false;
 			}
-			if (IsKeyReleased(KEY_D))
+			if (IsKeyReleased(KEY_A))
 			{
 				hitRegion[0].color = PINK;
 			}
-			if (IsKeyPressed(KEY_F))
+			// Center Left
+			if (IsKeyPressed(KEY_S))
 			{
 				hit = true;
 				hitRegion[1].active = true;
@@ -147,11 +149,12 @@ int main()
 			{
 				hitRegion[1].active = false;
 			}
-			if (IsKeyReleased(KEY_F))
+			if (IsKeyReleased(KEY_S))
 			{
 				hitRegion[1].color = PINK;
 			}
-			if (IsKeyPressed(KEY_J))
+			// Center Right
+			if (IsKeyPressed(KEY_K))
 			{
 				hit = true;
 				hitRegion[2].active = true;
@@ -161,11 +164,12 @@ int main()
 			{
 				hitRegion[2].active = false;
 			}
-			if (IsKeyReleased(KEY_J))
+			if (IsKeyReleased(KEY_K))
 			{
 				hitRegion[2].color = PINK;
 			}
-			if (IsKeyPressed(KEY_K))
+			// Far Right
+			if (IsKeyPressed(KEY_L))
 			{
 				hit = true;
 				hitRegion[3].active = true;
@@ -175,7 +179,7 @@ int main()
 			{
 				hitRegion[3].active = false;
 			}
-			if (IsKeyReleased(KEY_K))
+			if (IsKeyReleased(KEY_L))
 			{
 				hitRegion[3].color = PINK;
 			}
@@ -311,6 +315,7 @@ int main()
 	// De-Initialization
 	//--------------------------------------------------------------------------------------
 	UnloadMusicStream(music);
+	delete[] note;
 
 	CloseAudioDevice();
 
