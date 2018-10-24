@@ -27,7 +27,7 @@ int main()
 	int screenHeight = 450;
 	int textSize = 50;
 	int frameCounter = 0;
-	int speed = 4;
+	int speed = 250;
 	int totalNotes = 0;
 	int combo = 0;
 	int bpm = 168;
@@ -107,7 +107,7 @@ int main()
 			for (int i = 0; i < totalNotes; ++i)
 			{
 				if (note[i].active && GetMusicTimePlayed(music) >= note[i].timeStamp)
-					note[i].pos.y += speed;
+					note[i].pos.y += speed * GetFrameTime();
 				else
 					note[i].pos.y = -15;
 				note[i].rec.y = note[i].pos.y;
@@ -187,7 +187,7 @@ int main()
 					if (hitRegion[j].active)
 					{
 						// if timing is perfect
-						if (abs(note[i].col.y - regionLocation[j].y) < 4 && note[i].col.x == regionLocation[j].x)
+						if (abs(note[i].col.y - regionLocation[j].y) < 5 && note[i].col.x == regionLocation[j].x)
 						{
 							note[i].active = false;
 							showPerfect = true;
