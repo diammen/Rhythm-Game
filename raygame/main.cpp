@@ -27,7 +27,7 @@ int main()
 	int screenHeight = 450;
 	int textSize = 50;
 	int frameCounter = 0;
-	int speed = 4.5;
+	int speed = 250;
 	int totalNotes = 0;
 	int combo = 0;
 	int bpm = 168;
@@ -59,7 +59,7 @@ int main()
 	maxScore = 100000;
 
 	// location for each hit region
-	Rectangle regionLocation[] = { {160, 400, 40, 15}, {320, 400, 40, 15}, {480, 400, 40, 10}, {640, 400, 40, 10} };
+	Rectangle regionLocation[] = { {160, 400, 40, 20}, {320, 400, 40, 20}, {480, 400, 40, 20}, {640, 400, 40, 20} };
 
 	Music music = LoadMusicStream("bnhaTheDayShorter.ogg");
 
@@ -68,7 +68,7 @@ int main()
 	// initialize notes
 	for (int i = 0; i < totalNotes; ++i)
 	{
-		note[i].rec.y = -15;
+		note[i].rec.y = -20;
 		note[i].pos.y = note[i].rec.y;
 		note[i].col.x = note[i].rec.x;
 	}
@@ -80,7 +80,7 @@ int main()
 		hitRegion[i].pos.x = regionLocation[i].x;
 		hitRegion[i].pos.y = regionLocation[i].y;
 		hitRegion[i].rec = regionLocation[i];
-		hitRegion[i].rec.height = 15;
+		hitRegion[i].rec.height = 20;
 		hitRegion[i].color = PINK;
 	}
 
@@ -109,7 +109,7 @@ int main()
 				if (note[i].active && GetMusicTimePlayed(music) >= note[i].timeStamp)
 					note[i].pos.y += speed * GetFrameTime();
 				else
-					note[i].pos.y = -15;
+					note[i].pos.y = -20;
 				note[i].rec.y = note[i].pos.y;
 				note[i].col.y = note[i].pos.y;
 				if (note[i].pos.y > screenHeight && note[i].active == true)
@@ -191,7 +191,7 @@ int main()
 					if (hitRegion[j].active)
 					{
 						// if timing is perfect
-						if (abs(note[i].col.y - regionLocation[j].y) < 5 && note[i].col.x == regionLocation[j].x)
+						if (abs(note[i].col.y - regionLocation[j].y) < 6 && note[i].col.x == regionLocation[j].x)
 						{
 							note[i].active = false;
 							showPerfect = true;
@@ -219,6 +219,7 @@ int main()
 					}
 				}
 			}
+			// round score to 100k
 			if (score >= 999999)
 			{
 				score = 100000;
