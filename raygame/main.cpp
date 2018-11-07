@@ -14,7 +14,9 @@
 #include <iostream>
 #include <fstream>
 #include <string>
+#include <vector>
 #include "helper.h"
+#include "GameState.h"
 
 #define LIGHTPINK CLITERAL{ 255, 180, 255, 255 }
 
@@ -27,7 +29,7 @@ int main()
 	int screenHeight = 450;
 	int textSize = 50;
 	int frameCounter = 0;
-	int speed = 250;
+	int speed = 200;
 	int totalNotes = 0;
 	int combo = 0;
 	int bpm = 168;
@@ -38,7 +40,6 @@ int main()
 
 	float timePlayed = 0.0f;
 
-	bool gameOver = true;
 	bool start = false;
 	bool hit = false;
 	bool showPerfect = false;
@@ -53,7 +54,8 @@ int main()
 
 	hitRegion hitRegion[4] = {};
 
-	note * note = readFile(path);
+	vector<note> note = vReadFile(path);
+
 
 	totalNotes = note[0].totalNotes;
 	maxScore = 100000;
@@ -93,8 +95,17 @@ int main()
 		// Update
 		//----------------------------------------------------------------------------------
 		timePlayed = GetMusicTimePlayed(music) / GetMusicTimeLength(music) * (screenWidth - 40);
-		if (!gameOver)
+		switch (GameState::GetInstance().getState())
 		{
+		case MainMenu:
+			PauseMusicStream(music);
+			if (IsKeyPressed(KEY_SPACE))
+			{
+				GameState::GetInstance().setState(InGame);
+				start = true;
+			}
+			break;
+		case InGame:
 			if (start)
 			{
 				PlayMusicStream(music);
@@ -247,15 +258,11 @@ int main()
 				}
 			}
 			SetMusicLoopCount(music, 0);
-		}
-		else
-		{
-			PauseMusicStream(music);
-			if (IsKeyPressed(KEY_SPACE))
+			if (!IsMusicPlaying(music))
 			{
-				gameOver = false;
-				start = true;
+				GameState::GetInstance().setState(GameOver);
 			}
+			break;
 		}
 		//----------------------------------------------------------------------------------
 
@@ -265,10 +272,12 @@ int main()
 
 		ClearBackground(GRAY);
 		// draw game board
-		if (!gameOver)
+		switch (GameState::GetInstance().getState())
 		{
-
-
+		case MainMenu:
+			DrawText("Press space to play.", GetScreenWidth() / 2 - MeasureText("Press space to play.", 30) / 2, GetScreenHeight() / 2 - 50, 30, WHITE);
+			break;
+		case InGame:
 			for (int i = 0; i < 4; ++i)
 			{
 				DrawRectanglePro(Rectangle{ hitRegion[i].pos.x, hitRegion[i].pos.y, 40, 500 }, Vector2{ 40,0 }, 180, CLITERAL{ 175,175,175,175 }); // guidelines
@@ -303,10 +312,11 @@ int main()
 			DrawRectangleLines(20, screenHeight - 20, screenWidth - 40, 12, GRAY);
 			DrawText(FormatText("SCORE: %i", (int)score), 5, 5, 20, WHITE);
 			DrawText(FormatText("COMBO: %i", combo), 5, 30, 20, WHITE);
-		}
-		else
-		{
-			DrawText("Press space to play.", GetScreenWidth() / 2 - MeasureText("Press space to play.", 30) / 2, GetScreenHeight() / 2 - 50, 30, WHITE);
+			break;
+		case GameOver:
+			DrawText(FormatText("FINAL SCORE: %i", (int)score), GetScreenWidth() / 2 - MeasureText(FormatText("FINAL SCORE: %i", (int)score), textSize) / 2, GetScreenHeight() / 2 - 100, textSize, YELLOW);
+			DrawText(FormatText("%c", calculateRank(score)), GetScreenWidth() / 2 - MeasureText(FormatText("%c", calculateRank(score)), textSize) / 2, GetScreenHeight() / 2, 150, BLUE);
+			break;
 		}
 
 		EndDrawing();
@@ -316,7 +326,6 @@ int main()
 	// De-Initialization
 	//--------------------------------------------------------------------------------------
 	UnloadMusicStream(music);
-	delete[] note;
 
 	CloseAudioDevice();
 

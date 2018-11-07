@@ -2,6 +2,7 @@
 #include <vector>
 #include <string>
 using std::string;
+using std::vector;
 
 struct hitRegion
 {
@@ -27,3 +28,7 @@ public:
 };
 
 note * readFile(string filePath);
+
+vector<note> vReadFile(string filePath);
+
+char calculateRank(int score);
