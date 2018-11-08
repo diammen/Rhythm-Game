@@ -11,6 +11,7 @@
 
 #include "raylib.h"
 #include <cmath>
+#include <time.h>
 #include <iostream>
 #include <fstream>
 #include <string>
@@ -29,14 +30,20 @@ int main()
 	int screenHeight = 450;
 	int textSize = 50;
 	int frameCounter = 0;
-	int speed = 200;
+	int speed = 200; // base speed of a note is 200 pixels per second
+	int offset = 0; // offset on note position based on speed
+	float spdMod = 1.0f; // speed multiplier
 	int totalNotes = 0;
 	int combo = 0;
-	int bpm = 168;
+	int beatCount = 0;
+	float bpm = 168;
+	float crotchet = 0;
+	float lastBeat = 0;
+
 	float score = 0.0f;
 	float maxScore = 0.0f;
 	float hitAccuracy = 0.0f;
-
+	srand(time(NULL));
 
 	float timePlayed = 0.0f;
 
@@ -67,12 +74,10 @@ int main()
 
 	PlayMusicStream(music);
 
-	Wave wave = LoadWave("bnhaTheDayShorter.ogg");
-
 	// initialize notes
 	for (int i = 0; i < totalNotes; ++i)
 	{
-		note[i].rec.y = -20;
+		note[i].rec.y = -20 - offset;
 		note[i].pos.y = note[i].rec.y;
 		note[i].col.x = note[i].rec.x;
 	}
@@ -101,10 +106,17 @@ int main()
 		{
 		case MainMenu:
 			PauseMusicStream(music);
+			if (IsKeyPressed(KEY_RIGHT))
+				spdMod += 0.1f;
+			if (IsKeyPressed(KEY_LEFT))
+				spdMod -= 0.1f;
 			if (IsKeyPressed(KEY_SPACE))
 			{
 				GameState::GetInstance().setState(InGame);
 				start = true;
+				speed *= spdMod;
+				if (speed != 200) offset = speed + 20;
+				crotchet = 60 / bpm;
 			}
 			break;
 		case InGame:
@@ -113,15 +125,19 @@ int main()
 				PlayMusicStream(music);
 				start = false;
 			}
+			if (GetMusicTimePlayed(music) > lastBeat + crotchet)
+			{
+				lastBeat += crotchet;
+				beatCount++;
+			}
 			UpdateMusicStream(music);
-
 			// sync collisions and move notes
 			for (int i = 0; i < totalNotes; ++i)
 			{
 				if (note[i].active && GetMusicTimePlayed(music) >= note[i].timeStamp)
 					note[i].translate(speed);
 				else
-					note[i].pos.y = -20;
+					note[i].pos.y = -20 - offset;
 				note[i].rec.y = note[i].pos.y;
 				note[i].col.y = note[i].pos.y;
 				if (note[i].pos.y > screenHeight && note[i].active == true)
@@ -203,7 +219,7 @@ int main()
 					if (hitRegion[j].active)
 					{
 						// if timing is perfect
-						if (abs(note[i].col.y - regionLocation[j].y) < 6 && note[i].col.x == regionLocation[j].x)
+						if (abs(note[i].col.y - regionLocation[j].y) < 7 && note[i].col.x == regionLocation[j].x)
 						{
 							note[i].active = false;
 							showPerfect = true;
@@ -285,6 +301,7 @@ int main()
 		{
 		case MainMenu:
 			DrawText("Press space to play.", GetScreenWidth() / 2 - MeasureText("Press space to play.", 30) / 2, GetScreenHeight() / 2 - 50, 30, WHITE);
+			DrawText(FormatText("Speed Modifier: %.1fx", spdMod), GetScreenWidth() / 2 - MeasureText(FormatText("Speed Modifier: %f x"), 30) / 2, GetScreenHeight() / 2, 30, WHITE);
 			break;
 		case InGame:
 			for (int i = 0; i < 4; ++i)
@@ -319,6 +336,7 @@ int main()
 			DrawRectangleLines(20, screenHeight - 20, screenWidth - 40, 12, GRAY);
 			DrawText(FormatText("SCORE: %i", (int)score), 5, 5, 20, WHITE);
 			DrawText(FormatText("COMBO: %i", combo), 5, 30, 20, WHITE);
+			DrawText(FormatText("Beat: %i", beatCount), 5, 55, 20, WHITE);
 			break;
 		case GameOver:
 			DrawText(FormatText("FINAL SCORE: %i", (int)score), GetScreenWidth() / 2 - MeasureText(FormatText("FINAL SCORE: %i", (int)score), textSize) / 2, GetScreenHeight() / 2 - 100, textSize, YELLOW);
