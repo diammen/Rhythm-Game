@@ -61,11 +61,13 @@ int main()
 	maxScore = 100000;
 
 	// location for each hit region
-	Rectangle regionLocation[] = { {160, 400, 40, 20}, {320, 400, 40, 20}, {480, 400, 40, 20}, {640, 400, 40, 20} };
+	Rectangle regionLocation[] = { {325, 400, 40, 20}, {375, 400, 40, 20}, {425, 400, 40, 20}, {475, 400, 40, 20} };
 
 	Music music = LoadMusicStream("bnhaTheDayShorter.ogg");
 
 	PlayMusicStream(music);
+
+	Wave wave = LoadWave("bnhaTheDayShorter.ogg");
 
 	// initialize notes
 	for (int i = 0; i < totalNotes; ++i)
@@ -111,7 +113,6 @@ int main()
 				PlayMusicStream(music);
 				start = false;
 			}
-
 			UpdateMusicStream(music);
 
 			// sync collisions and move notes
