@@ -1,6 +1,8 @@
 #pragma once
 #include <vector>
 #include <string>
+#include <fstream>
+#include "raylib.h"
 using std::string;
 using std::vector;
 
@@ -22,12 +24,12 @@ public:
 	int totalNotes;
 	float timeStamp;
 
+	void translate(int speed);
+
 	// ctors & dtors
 	note();
 	~note();
 };
-
-note * readFile(string filePath);
 
 vector<note> vReadFile(string filePath);
 

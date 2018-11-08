@@ -118,7 +118,7 @@ int main()
 			for (int i = 0; i < totalNotes; ++i)
 			{
 				if (note[i].active && GetMusicTimePlayed(music) >= note[i].timeStamp)
-					note[i].pos.y += speed * GetFrameTime();
+					note[i].translate(speed);
 				else
 					note[i].pos.y = -20;
 				note[i].rec.y = note[i].pos.y;
@@ -208,6 +208,9 @@ int main()
 							showPerfect = true;
 							showGreat = false;
 							showMiss = false;
+
+							// factory.instance.MakeText("PERFECT!", 0,0, 5);
+
 							frameCounter = 0;
 							combo++;
 							hitAccuracy = 1.0f;
@@ -266,11 +269,16 @@ int main()
 		}
 		//----------------------------------------------------------------------------------
 
+		// Factory.instance().update();
+
 		// Draw
 		//----------------------------------------------------------------------------------
 		BeginDrawing();
 
 		ClearBackground(GRAY);
+
+		// Factory.instance().draw();
+
 		// draw game board
 		switch (GameState::GetInstance().getState())
 		{
@@ -282,12 +290,10 @@ int main()
 			{
 				DrawRectanglePro(Rectangle{ hitRegion[i].pos.x, hitRegion[i].pos.y, 40, 500 }, Vector2{ 40,0 }, 180, CLITERAL{ 175,175,175,175 }); // guidelines
 				DrawRectangle(hitRegion[i].pos.x, hitRegion[i].pos.y, hitRegion[i].rec.width, hitRegion[i].rec.height, hitRegion[i].color); // hit regions
-
 			}
 			// draw notes
 			for (int i = 0; i < totalNotes; ++i)
 			{
-
 				if (note[i].active)
 				{
 					DrawRectanglePro(note[i].rec, Vector2{ 0,0 }, 0, WHITE);
