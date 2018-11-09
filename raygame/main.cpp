@@ -64,8 +64,8 @@ int main()
 
 	vector<note> note;
 	vector<text> songText;
-	songText.push_back(text(Vector2{ 100,300 }, "The Day", 40, ORANGE));
-	songText.push_back(text(Vector2{ 450,300 }, "Great Days", 40, ORANGE));
+	songText.push_back(text(Vector2{ 100,300 }, "1. The Day", 40, ORANGE));
+	songText.push_back(text(Vector2{ 450,300 }, "2. Great Days", 40, ORANGE));
 
 	Music music = LoadMusicStream("TheDayShorter.ogg");
 
@@ -97,9 +97,9 @@ int main()
 		{
 		case MainMenu:
 			if (IsKeyPressed(KEY_RIGHT))
-				spdMod += 0.1f;
+				spdMod = 2.0f;
 			if (IsKeyPressed(KEY_LEFT))
-				spdMod -= 0.1f;
+				spdMod = 1.0f;
 			if (IsKeyPressed(KEY_SPACE))
 			{
 				GameState::GetInstance().setState(InGame);
@@ -160,6 +160,7 @@ int main()
 					note[i].translate(speed);
 				else
 					note[i].pos.y = -20 - offset;
+
 				note[i].rec.y = note[i].pos.y;
 				note[i].col.y = note[i].pos.y;
 				if (note[i].pos.y > screenHeight && note[i].active == true)
@@ -252,8 +253,6 @@ int main()
 							showGreat = false;
 							showMiss = false;
 
-							// factory.instance.MakeText("PERFECT!", 0,0, 5);
-
 							frameCounter = 0;
 							combo++;
 							hitAccuracy = 1.0f;
@@ -267,6 +266,7 @@ int main()
 							showGreat = true;
 							showPerfect = false;
 							showMiss = false;
+
 							frameCounter = 0;
 							combo++;
 							hitAccuracy = 0.75f;
