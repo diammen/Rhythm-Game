@@ -17,6 +17,7 @@
 #include <string>
 #include <vector>
 #include "helper.h"
+#include "Text.h"
 #include "GameState.h"
 
 #define LIGHTPINK CLITERAL{ 255, 180, 255, 255 }
@@ -36,9 +37,9 @@ int main()
 	int totalNotes = 0;
 	int combo = 0;
 	int beatCount = 0;
-	float bpm = 168;
-	float crotchet = 0;
-	float lastBeat = 0;
+	float bpm = 168;	// beats per minute
+	float crotchet = 0; // time duration of a beat
+	float lastBeat = 0; // previous beat on song position
 
 	float score = 0.0f;
 	float maxScore = 0.0f;
@@ -53,7 +54,7 @@ int main()
 	bool showGreat = false;
 	bool showMiss = false;
 
-	string path = "test.txt";
+	string path;
 
 	InitWindow(screenWidth, screenHeight, "uso mania");
 
@@ -61,26 +62,17 @@ int main()
 
 	hitRegion hitRegion[4] = {};
 
-	vector<note> note = vReadFile(path);
+	vector<note> note;
+	vector<text> songText;
+	songText.push_back(text(Vector2{ 100,300 }, "The Day", 40, ORANGE));
+	songText.push_back(text(Vector2{ 450,300 }, "Great Days", 40, ORANGE));
 
+	Music music = LoadMusicStream("TheDayShorter.ogg");
 
-	totalNotes = note[0].totalNotes;
 	maxScore = 100000;
 
 	// location for each hit region
 	Rectangle regionLocation[] = { {325, 400, 40, 20}, {375, 400, 40, 20}, {425, 400, 40, 20}, {475, 400, 40, 20} };
-
-	Music music = LoadMusicStream("bnhaTheDayShorter.ogg");
-
-	PlayMusicStream(music);
-
-	// initialize notes
-	for (int i = 0; i < totalNotes; ++i)
-	{
-		note[i].rec.y = -20 - offset;
-		note[i].pos.y = note[i].rec.y;
-		note[i].col.x = note[i].rec.x;
-	}
 
 	// initialize hit regions
 	for (int i = 0; i < 4; ++i)
@@ -101,11 +93,9 @@ int main()
 	{
 		// Update
 		//----------------------------------------------------------------------------------
-		timePlayed = GetMusicTimePlayed(music) / GetMusicTimeLength(music) * (screenWidth - 40);
 		switch (GameState::GetInstance().getState())
 		{
 		case MainMenu:
-			PauseMusicStream(music);
 			if (IsKeyPressed(KEY_RIGHT))
 				spdMod += 0.1f;
 			if (IsKeyPressed(KEY_LEFT))
@@ -117,14 +107,46 @@ int main()
 				speed *= spdMod;
 				if (speed != 200) offset = speed + 20;
 				crotchet = 60 / bpm;
+				if (songText[0].selected)
+				{
+					music = LoadMusicStream("TheDayShorter.ogg");
+					path = "TheDay.txt";
+					note = vReadFile(path);
+					totalNotes = note[0].totalNotes;
+				}
+				else if (songText[1].selected)
+				{
+					bpm = 170;
+					music = LoadMusicStream("GreatDays.ogg");
+					SetMusicVolume(music, 3.0f);
+					path = "GreatDays.txt";
+					note = vReadFile(path);
+					totalNotes = note[0].totalNotes;
+				}
+			}
+			if (IsKeyPressed(KEY_ONE)) // the day
+			{
+				songText[0].selected = true;
+				songText[0].size = 50;
+				songText[1].selected = false;
+				songText[1].size = 40;
+			}
+			if (IsKeyPressed(KEY_TWO)) // great days
+			{
+				songText[1].selected = true;
+				songText[1].size = 50;
+				songText[0].selected = false;
+				songText[0].size = 40;
 			}
 			break;
 		case InGame:
+			timePlayed = GetMusicTimePlayed(music) / GetMusicTimeLength(music) * (screenWidth - 40);
 			if (start)
 			{
 				PlayMusicStream(music);
 				start = false;
 			}
+			// beat counter
 			if (GetMusicTimePlayed(music) > lastBeat + crotchet)
 			{
 				lastBeat += crotchet;
@@ -149,6 +171,10 @@ int main()
 					showPerfect = false;
 					frameCounter = 0;
 				}
+			}
+			if (IsKeyPressed(KEY_P))
+			{
+				start = !start;
 			}
 			// activate one hit region based on input
 			// Far Left
@@ -286,15 +312,11 @@ int main()
 		}
 		//----------------------------------------------------------------------------------
 
-		// Factory.instance().update();
-
 		// Draw
 		//----------------------------------------------------------------------------------
 		BeginDrawing();
 
 		ClearBackground(GRAY);
-
-		// Factory.instance().draw();
 
 		// draw game board
 		switch (GameState::GetInstance().getState())
@@ -302,6 +324,11 @@ int main()
 		case MainMenu:
 			DrawText("Press space to play.", GetScreenWidth() / 2 - MeasureText("Press space to play.", 30) / 2, GetScreenHeight() / 2 - 50, 30, WHITE);
 			DrawText(FormatText("Speed Modifier: %.1fx", spdMod), GetScreenWidth() / 2 - MeasureText(FormatText("Speed Modifier: %f x"), 30) / 2, GetScreenHeight() / 2, 30, WHITE);
+			for (int i = 0; i < songText.size(); ++i)
+			{
+				songText[i].draw();
+				DrawText(songText[i].content.c_str(), songText[i].position.x, songText[i].position.y, songText[i].size, songText[i].color);
+			}
 			break;
 		case InGame:
 			for (int i = 0; i < 4; ++i)
@@ -337,6 +364,7 @@ int main()
 			DrawText(FormatText("SCORE: %i", (int)score), 5, 5, 20, WHITE);
 			DrawText(FormatText("COMBO: %i", combo), 5, 30, 20, WHITE);
 			DrawText(FormatText("Beat: %i", beatCount), 5, 55, 20, WHITE);
+			DrawText(FormatText("Last Beat: %f", lastBeat), 5, 80, 20, WHITE);
 			break;
 		case GameOver:
 			DrawText(FormatText("FINAL SCORE: %i", (int)score), GetScreenWidth() / 2 - MeasureText(FormatText("FINAL SCORE: %i", (int)score), textSize) / 2, GetScreenHeight() / 2 - 100, textSize, YELLOW);

@@ -10,4 +10,9 @@ public:
 	string content;
 	int size;
 	Color color;
+	bool selected;
+
+	void draw();
+	text();
+	text(Vector2 pos, const string & songName, int fontSize, Color color);
 };
