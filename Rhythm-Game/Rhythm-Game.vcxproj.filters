@@ -30,6 +30,9 @@
     <ClCompile Include="GameState.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="TextState.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="note.h">
@@ -42,6 +45,12 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="GameState.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="TextState.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="textStateMachine.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

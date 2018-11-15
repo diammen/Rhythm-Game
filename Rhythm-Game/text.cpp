@@ -11,6 +11,11 @@ text::text(Vector2 _position, const string & songName, int _size, Color _color)
 	selected = false;
 }
 
+void text::update()
+{
+
+}
+
 void text::draw()
 {
 	DrawText(content.c_str(), position.x, position.y, size, color);

@@ -21,6 +21,7 @@
 #include "note.h"
 #include "text.h"
 #include "GameState.h"
+#include "TextState.h"
 
 #define LIGHTPINK CLITERAL{ 255, 180, 255, 255 }
 #define LIGHTBLUE CLITERAL{ 180, 255, 255, 255 }
@@ -43,9 +44,7 @@ int main()
 	int greatCount = 0;				// number of greats achieved in the song
 	int missCount = 0;				// number of misses in the song
 	int beatCount = 0;
-	float lastReportedSongPosition = 0;
-	float songTime = 0;
-	float previousFrameTime = 0;
+
 	float spdMod = 1.0f;			// speed multiplier
 	float bpm = 186;				// beats per minute
 	float crotchet = 0;				// time duration of a beat
@@ -166,7 +165,6 @@ int main()
 			if (start)
 			{
 				PlayMusicStream(music);
-				previousFrameTime = GetFrameTime();
 			}
 			else
 			{
@@ -181,13 +179,6 @@ int main()
 			{
 				lastBeat += crotchet;
 				beatCount++;
-			}
-			songTime += GetFrameTime() - previousFrameTime;
-			previousFrameTime = GetFrameTime();
-			if (GetMusicTimePlayed(music) != lastReportedSongPosition)
-			{
-				songTime = (songTime + GetMusicTimePlayed(music) / 2);
-				lastReportedSongPosition = GetMusicTimePlayed(music);
 			}
 			UpdateMusicStream(music);
 			// sync collisions and move notes
