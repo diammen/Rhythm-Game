@@ -1,13 +1,9 @@
 #pragma once
+#include "stateMachine.h"
 
-enum TStates
+class textSM : public stateMachine
 {
-	Idle = 0,
-	Selected,
-	Return
-};
-
-class textSM
-{
-
+public:
+	void setState(states newState);
+	states getState();
 };

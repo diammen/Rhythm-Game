@@ -20,8 +20,9 @@
 #include "helper.h"
 #include "note.h"
 #include "text.h"
+#include "timingText.h"
+#include "hitRegion.h"
 #include "GameState.h"
-#include "TextState.h"
 
 #define LIGHTPINK CLITERAL{ 255, 180, 255, 255 }
 #define LIGHTBLUE CLITERAL{ 180, 255, 255, 255 }
@@ -36,7 +37,7 @@ int main()
 	int textSize = 50;
 	int frameCounter = 0;
 	int speed = 200;				// base speed of a note is 200 pixels per second
-	int offset = 0;				// offset on note position based on speed
+	int offset = 0;					// offset on note position based on speed
 	int totalNotes = 0;
 	int combo = 0;
 	int highestCombo = 0;			// highest combo achieved in the song
@@ -44,6 +45,8 @@ int main()
 	int greatCount = 0;				// number of greats achieved in the song
 	int missCount = 0;				// number of misses in the song
 	int beatCount = 0;
+	int menuSelect = 0;				// current selection in main menu
+	int lastSelected = 0;
 
 	float spdMod = 1.0f;			// speed multiplier
 	float bpm = 186;				// beats per minute
@@ -57,47 +60,39 @@ int main()
 	float timePlayed = 0.0f;
 
 	bool start = false;
-	bool hit = false;
 	bool showPerfect = false;
 	bool showGreat = false;
 	bool showMiss = false;
 
-	size_t vsize = 0;
-
-	string path;
-
-	InitWindow(screenWidth, screenHeight, "uso mania");
+	InitWindow(screenWidth, screenHeight, "ray!mania");
 
 	InitAudioDevice();
 
-	hitRegion hitRegion[4] = {};
+	// location for each hit region
+	Rectangle regionLocation[] = { { 325, 400, 40, 20 },{ 375, 400, 40, 20 },{ 425, 400, 40, 20 },{ 475, 400, 40, 20 } };
+
+	vector<hitRegion> hitRegions;
+	hitRegions.push_back(hitRegion(regionLocation[0], KEY_A));
+	hitRegions.push_back(hitRegion(regionLocation[1], KEY_S));
+	hitRegions.push_back(hitRegion(regionLocation[2], KEY_K));
+	hitRegions.push_back(hitRegion(regionLocation[3], KEY_L));
 
 	vector<note> song1 = vReadFile("TheDay.txt");
 	vector<note> song2 = vReadFile("GreatDays.txt");
 	vector<note> songTest = vReadFile("test.txt");
-	note test;
 	vector<note> note;
-	vector<text> songText;
-	songText.push_back(text(Vector2{ 100,100 }, "1. The Day", 40, ORANGE));
-	songText.push_back(text(Vector2{ 100,200 }, "2. Great Days", 40, ORANGE));
+
+	vector<text> menuText;
+	menuText.push_back(text(Vector2{ 100,50 }, "1. The Day", 40, ORANGE));
+	menuText.push_back(text(Vector2{ 100,100 }, "2. Great Days", 40, ORANGE));
+	menuText.push_back(text(Vector2{ 100,150 }, "3. Options", 40, ORANGE));
+	menuText.push_back(text(Vector2{ 100,200 }, "4. Exit", 40, ORANGE));
+
+	timingText timeText(Vector2{ 0,-50 }, "Perfect!", 50, GREEN);
 
 	Music music = LoadMusicStream("TheDayShorter.ogg");
 
 	maxScore = 100000;
-
-	// location for each hit region
-	Rectangle regionLocation[] = { {325, 400, 40, 20}, {375, 400, 40, 20}, {425, 400, 40, 20}, {475, 400, 40, 20} };
-
-	// initialize hit regions
-	for (int i = 0; i < 4; ++i)
-	{
-		hitRegion[i].active = true;
-		hitRegion[i].pos.x = regionLocation[i].x;
-		hitRegion[i].pos.y = regionLocation[i].y;
-		hitRegion[i].rec = regionLocation[i];
-		hitRegion[i].rec.height = 20;
-		hitRegion[i].color = PINK;
-	}
 
 	SetTargetFPS(60);
 	//--------------------------------------------------------------------------------------
@@ -113,8 +108,9 @@ int main()
 			if (IsKeyPressed(KEY_RIGHT))
 				spdMod += 0.1f;
 			if (IsKeyPressed(KEY_LEFT))
-				spdMod = 1.0f;
-
+				spdMod -= 0.1f;
+			if (spdMod < 1)
+				spdMod = 1;
 			if (IsKeyPressed(KEY_SPACE))
 			{
 				GameState::GetInstance().setState(InGame);
@@ -127,15 +123,14 @@ int main()
 				beatCount = 0;
 				lastBeat = 0;
 
-				if (songText[0].selected)
+				if (menuText[0].state() == Active)
 				{
 					music = LoadMusicStream("TheDayShorter.ogg");
-					path = "TheDay.txt";
 					note.clear();
 					note = song1;
 					totalNotes = note[0].totalNotes;
 				}
-				else if (songText[1].selected)
+				else if (menuText[1].state() == Active)
 				{
 					bpm = 170;
 					music = LoadMusicStream("GreatDays.ogg");
@@ -145,20 +140,36 @@ int main()
 				}
 				for (int i = 0; i < note.size(); ++i) note[i].pos.y = offset;
 			}
-			if (IsKeyPressed(KEY_ONE)) // the day
+			if (IsKeyPressed(KEY_DOWN))
 			{
-				songText[0].selected = true;
-				songText[0].size = 50;
-				songText[1].selected = false;
-				songText[1].size = 40;
+				menuSelect++; // move up the menu
+
+				menuText[lastSelected].setReturn(); // set the previously chosen option back
+
+				if (menuSelect > menuText.size() - 1) // clamp menuSelect to amount of options
+					menuSelect = menuText.size() - 1;
+
+				lastSelected = menuSelect; // set last chosen option to currently selected
+
+
+				menuText[menuSelect].setSelected(); // set chosen option to selected state
 			}
-			if (IsKeyPressed(KEY_TWO)) // great days
+			if (IsKeyPressed(KEY_UP))
 			{
-				songText[1].selected = true;
-				songText[1].size = 50;
-				songText[0].selected = false;
-				songText[0].size = 40;
+				menuSelect--; // move down the menu
+
+				menuText[lastSelected].setReturn();
+
+				if (menuSelect < 0)
+					menuSelect = 0;
+
+				lastSelected = menuSelect;
+
+
+				menuText[menuSelect].setSelected();
 			}
+
+			for (int i = 0; i < menuText.size(); ++i) menuText[i].update(GetFrameTime());
 			break;
 		case InGame:
 			timePlayed = GetMusicTimePlayed(music) / GetMusicTimeLength(music) * (screenWidth);
@@ -198,6 +209,10 @@ int main()
 					showMiss = true;
 					showGreat = false;
 					showPerfect = false;
+					timeText.setSelected();
+					timeText.content = "Miss";
+					timeText.color = RED;
+
 					frameCounter = 0;
 				}
 				if (note[i].active && !note[i].hit)
@@ -207,72 +222,16 @@ int main()
 
 			}
 			// activate one hit region based on input
-			// Far Left
-			if (IsKeyPressed(KEY_A))
+			for (int i = 0; i < hitRegions.size(); ++i)
 			{
-				hit = true;
-				hitRegion[0].active = true;
-				hitRegion[0].color = LIGHTPINK;
-			}
-			else
-			{
-				hitRegion[0].active = false;
-			}
-			if (IsKeyReleased(KEY_A))
-			{
-				hitRegion[0].color = PINK;
-			}
-			// Center Left
-			if (IsKeyPressed(KEY_S))
-			{
-				hit = true;
-				hitRegion[1].active = true;
-				hitRegion[1].color = LIGHTPINK;
-			}
-			else
-			{
-				hitRegion[1].active = false;
-			}
-			if (IsKeyReleased(KEY_S))
-			{
-				hitRegion[1].color = PINK;
-			}
-			// Center Right
-			if (IsKeyPressed(KEY_K))
-			{
-				hit = true;
-				hitRegion[2].active = true;
-				hitRegion[2].color = LIGHTPINK;
-			}
-			else
-			{
-				hitRegion[2].active = false;
-			}
-			if (IsKeyReleased(KEY_K))
-			{
-				hitRegion[2].color = PINK;
-			}
-			// Far Right
-			if (IsKeyPressed(KEY_L))
-			{
-				hit = true;
-				hitRegion[3].active = true;
-				hitRegion[3].color = LIGHTPINK;
-			}
-			else
-			{
-				hitRegion[3].active = false;
-			}
-			if (IsKeyReleased(KEY_L))
-			{
-				hitRegion[3].color = PINK;
+				hitRegions[i].update();
 			}
 			// check for collision between notes and hit regions
 			for (int i = 0; i < totalNotes; ++i)
 			{
 				for (int j = 0; j < 4; ++j)
 				{
-					if (hitRegion[j].active)
+					if (hitRegions[j].active)
 					{
 						// if timing is perfect
 						if (abs(note[i].col.y - regionLocation[j].y) < 7 && note[i].col.x == regionLocation[j].x)
@@ -282,6 +241,9 @@ int main()
 							showPerfect = true;
 							showGreat = false;
 							showMiss = false;
+							timeText.setSelected();
+							timeText.content = "Perfect!";
+							timeText.color = GREEN;
 
 							frameCounter = 0;
 							combo++;
@@ -291,13 +253,16 @@ int main()
 							break;
 						}
 						// if timing is not perfect
-						else if (CheckCollisionRecs(note[i].rec, hitRegion[j].rec))
+						else if (CheckCollisionRecs(note[i].rec, hitRegions[j].rec))
 						{
 							note[i].active = false;
 							note[i].hit = true;
 							showGreat = true;
 							showPerfect = false;
 							showMiss = false;
+							timeText.setSelected();
+							timeText.content = "Great!";
+							timeText.color = SKYBLUE;
 
 							frameCounter = 0;
 							combo++;
@@ -314,28 +279,7 @@ int main()
 			{
 				score = 100000;
 			}
-			// play text animation
-			if (showPerfect || showGreat || showMiss)
-			{
-				frameCounter += 1;
-				if (frameCounter <= 2)
-				{
-					textSize += 5;
-				}
-				else if (frameCounter > 2)
-				{
-					textSize -= 5;
-					if (textSize < 50)
-					{
-						textSize = 50;
-					}
-				}
-				if (frameCounter >= 50)
-				{
-					textSize = 50;
-					frameCounter = 50;
-				}
-			}
+			timeText.update(GetFrameTime());
 			SetMusicLoopCount(music, 0);
 			if (!IsMusicPlaying(music))
 			{
@@ -349,8 +293,7 @@ int main()
 				GameState::GetInstance().setState(MainMenu);
 				for (int i = 0; i < 2; ++i)
 				{
-					songText[i].selected = false;
-					songText[i].size = 40;
+					menuText[i].reset();
 				}
 			}
 		}
@@ -368,18 +311,15 @@ int main()
 		case MainMenu:
 			DrawText("Press space to play.", GetScreenWidth() / 2 - MeasureText("Press space to play.", 30) / 2, 400, 30, WHITE);
 			DrawText(FormatText("Speed Modifier: %.1fx", spdMod), GetScreenWidth() / 2 - MeasureText(FormatText("Speed Modifier: %.1fx", spdMod), 30) / 2, 350, 30, WHITE);
-			for (int i = 0; i < songText.size(); ++i)
+			for (int i = 0; i < menuText.size(); ++i)
 			{
-				songText[i].draw();
-				DrawText(songText[i].content.c_str(), songText[i].position.x, songText[i].position.y, songText[i].size, songText[i].color);
+				menuText[i].draw();
 			}
 			break;
 		case InGame:
 			for (int i = 0; i < 4; ++i)
 			{
-				DrawRectanglePro(Rectangle{ hitRegion[i].pos.x, hitRegion[i].pos.y, 40, 500 }, Vector2{ 40,0 }, 180, CLITERAL{ 255,255,255,175 }); // guidelines
-				DrawRectanglePro(Rectangle{ hitRegion[i].pos.x, hitRegion[i].pos.y, 38, 500 }, Vector2{ 39,0 }, 180, CLITERAL{ 50,50,50,255 }); // guidelines
-				DrawRectangle(hitRegion[i].pos.x, hitRegion[i].pos.y, hitRegion[i].rec.width, hitRegion[i].rec.height, hitRegion[i].color); // hit regions
+				hitRegions[i].draw();
 			}
 			// draw notes
 			for (int i = 0; i < totalNotes; ++i)
@@ -389,20 +329,7 @@ int main()
 					DrawRectanglePro(note[i].rec, Vector2{ 0,0 }, 0, WHITE);
 				}
 			}
-			// show feedback depending on timing
-			if (showPerfect)
-			{
-				DrawText("Perfect!", GetScreenWidth() / 2 - MeasureText("Perfect!", textSize) / 2, GetScreenHeight() / 2 - 50, textSize, GREEN);
-			}
-			if (showGreat)
-			{
-				DrawText("Great!", GetScreenWidth() / 2 - MeasureText("Great!", textSize) / 2, GetScreenHeight() / 2 - 50, textSize, SKYBLUE);
-			}
-			if (showMiss)
-			{
-				DrawText("Miss", GetScreenWidth() / 2 - MeasureText("Miss", textSize) / 2, GetScreenHeight() / 2 - 50, textSize, RED);
-			}
-
+			timeText.draw();
 			DrawRectangle(0, screenHeight - 10, (int)timePlayed, 10, LIGHTBLUE);
 
 			DrawText(FormatText("SCORE: %i", (int)score), 5, 5, 20, WHITE);

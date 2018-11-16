@@ -20,3 +20,9 @@ public:
 	static GameState& GetInstance();
 	~GameState();
 };
+
+void gMainMenu();
+
+void gInGame();
+
+void gGameOver();

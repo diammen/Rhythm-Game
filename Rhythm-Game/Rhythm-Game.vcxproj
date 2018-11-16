@@ -128,23 +128,30 @@
       <OptimizeReferences>true</OptimizeReferences>
       <AdditionalLibraryDirectories>$(SolutionDir)thirdparty\raylib\lib\$(PlatformShortName);%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <AdditionalDependencies>raylib.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <SubSystem>Windows</SubSystem>
+      <EntryPointSymbol>mainCRTStartup</EntryPointSymbol>
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="GameState.cpp" />
     <ClCompile Include="helper.cpp" />
+    <ClCompile Include="hitRegion.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="note.cpp" />
     <ClCompile Include="text.cpp" />
-    <ClCompile Include="TextState.cpp" />
+    <ClCompile Include="textStateMachine.cpp" />
+    <ClCompile Include="timingText.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="GameManager.h" />
     <ClInclude Include="GameState.h" />
     <ClInclude Include="helper.h" />
+    <ClInclude Include="hitRegion.h" />
     <ClInclude Include="note.h" />
+    <ClInclude Include="stateMachine.h" />
     <ClInclude Include="text.h" />
-    <ClInclude Include="TextState.h" />
     <ClInclude Include="textStateMachine.h" />
+    <ClInclude Include="timingText.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

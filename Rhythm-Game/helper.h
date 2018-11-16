@@ -7,14 +7,6 @@
 using std::string;
 using std::vector;
 
-struct hitRegion
-{
-	Rectangle rec;
-	Vector2 pos;
-	bool active;
-	Color color;
-};
-
 vector<note> vReadFile(string filePath);
 
 char calculateRank(int score);
