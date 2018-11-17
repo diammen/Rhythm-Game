@@ -53,6 +53,8 @@ void text::setSelected()
 	stateMachine.setState(Active);
 }
 
+void text::setSelected(string newText, Color newColor) {}
+
 void text::setReturn()
 {
 	stateMachine.setState(Return);

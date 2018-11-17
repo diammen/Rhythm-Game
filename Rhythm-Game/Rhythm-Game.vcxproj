@@ -133,10 +133,14 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="GameManager.cpp" />
+    <ClCompile Include="GameOver.cpp" />
     <ClCompile Include="GameState.cpp" />
     <ClCompile Include="helper.cpp" />
     <ClCompile Include="hitRegion.cpp" />
+    <ClCompile Include="InGame.cpp" />
     <ClCompile Include="main.cpp" />
+    <ClCompile Include="MainMenu.cpp" />
     <ClCompile Include="note.cpp" />
     <ClCompile Include="text.cpp" />
     <ClCompile Include="textStateMachine.cpp" />
@@ -144,11 +148,14 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="GameManager.h" />
+    <ClInclude Include="GameOver.h" />
     <ClInclude Include="GameState.h" />
     <ClInclude Include="helper.h" />
     <ClInclude Include="hitRegion.h" />
+    <ClInclude Include="InGame.h" />
+    <ClInclude Include="MainMenu.h" />
     <ClInclude Include="note.h" />
-    <ClInclude Include="stateMachine.h" />
+    <ClInclude Include="Options.h" />
     <ClInclude Include="text.h" />
     <ClInclude Include="textStateMachine.h" />
     <ClInclude Include="timingText.h" />

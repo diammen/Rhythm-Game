@@ -2,14 +2,22 @@
 
 timingText::timingText() {}
 
-timingText::timingText(Vector2 _position, const string & _content, int _size, Color _color)
+timingText::timingText(const string & _content, int _size, Color _color)
 {
-	position = _position;
+	position = Vector2{ 0,-50 };
 	defaultX = position.x;
 	content = _content;
 	size = _size;
 	color = _color;
 	tick = 0;
+}
+
+void timingText::setSelected(string newText, Color newColor)
+{
+	tick = 0;
+	stateMachine.setState(Active);
+	content = newText;
+	color = newColor;
 }
 
 void timingText::update(float delta)
@@ -44,13 +52,13 @@ bool timingText::pulse()
 	}
 	else if (tick >= 0.1)
 	{
-		tick += 1 * deltaTime;
+		tick += 2 * deltaTime;
 		if (size > 50)
 			size -= 5;
 	}
 	else
 	{
-		tick += 1 * deltaTime;
+		tick += 2 * deltaTime;
 		if (size < 60)
 			size += 5;
 	}

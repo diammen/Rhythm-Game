@@ -22,12 +22,14 @@ public:
 	float deltaTime;
 
 	states state();
-	void setSelected();
+	virtual void setSelected();
+	virtual void setSelected(string newText, Color newColor);
 	void setReturn();
 	void reset();
 
 	virtual void update(float delta);
 	virtual void draw();
+
 	text();
 	text(Vector2 pos, const string & _content, int fontSize, Color color);
 };

@@ -1,9 +1,18 @@
 #pragma once
 #include <vector>
-#include <string>
+#include <cmath>
+#include <time.h>
+#include <iostream>
 #include <fstream>
-#include "raylib.h"
+#include <string>
+#include <vector>
+#include "helper.h"
 #include "note.h"
+#include "text.h"
+#include "timingText.h"
+#include "hitRegion.h"
+#include "GameState.h"
+#include "GameManager.h"
 using std::string;
 using std::vector;
 

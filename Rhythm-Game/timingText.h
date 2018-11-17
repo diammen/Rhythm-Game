@@ -6,7 +6,9 @@ private:
 	bool pulse();
 public:
 	timingText();
-	timingText(Vector2 pos, const string & _content, int fontSize, Color color);
+	timingText(const string & _content, int fontSize, Color color);
+
+	void setSelected(string newText, Color newColor);
 
 	void update(float delta);
 	void draw();

@@ -1,10 +1,13 @@
 #pragma once
 #include <raylib.h>
+#include <vector>
 enum GStates
 {
 	MainMenu = 0,
+	Options,
 	InGame,
-	GameOver
+	GameOver,
+	Exit
 };
 class GameState
 {
@@ -20,9 +23,3 @@ public:
 	static GameState& GetInstance();
 	~GameState();
 };
-
-void gMainMenu();
-
-void gInGame();
-
-void gGameOver();
