@@ -13,6 +13,10 @@ GameManager::GameManager()
 	greatCount = 0;				// number of greats achieved in the song
 	missCount = 0;				// number of misses in the song
 	beatCount = 0;
+	key1 = KEY_A;
+	key2 = KEY_S;
+	key3 = KEY_K;
+	key4 = KEY_L;
 
 	spdMod = 1.0f;			// speed multiplier
 	bpm = 186;				// beats per minute
@@ -31,7 +35,7 @@ GameManager::GameManager()
 	song2 = vReadFile("GreatDays.txt");
 	songTest = vReadFile("test.txt");
 
-	music = LoadMusicStream("TheDayShorter.ogg");
+	//music = LoadMusicStream("GreatDays.ogg");
 
 }
 

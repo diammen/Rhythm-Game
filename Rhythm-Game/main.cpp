@@ -24,6 +24,7 @@
 #include "hitRegion.h"
 #include "GameState.h"
 #include "MainMenu.h"
+#include "Options.h"
 #include "InGame.h"
 #include "GameOver.h"
 
@@ -41,7 +42,8 @@ int main()
 
 	gMainMenu scene1;
 	gInGame scene2;
-	gGameOver scene3;
+	gOptions scene3;
+	gGameOver scene4;
 
 	InitWindow(screenWidth, screenHeight, "ray!mania");
 
@@ -64,10 +66,12 @@ int main()
 			scene2.update();
 			break;
 		case GameOver:
-			scene3.update();
+			scene4.update();
 			break;
 		case Exit:
 			exit = true;
+			break;
+		default:
 			break;
 		}
 		//----------------------------------------------------------------------------------
@@ -86,8 +90,11 @@ int main()
 		case InGame:
 			scene2.draw();
 			break;
-		case GameOver:
+		case Options:
 			scene3.draw();
+			break;
+		case GameOver:
+			scene4.draw();
 			break;
 		case Exit:
 			break;

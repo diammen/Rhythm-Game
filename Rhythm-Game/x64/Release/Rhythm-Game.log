@@ -1,0 +1,33 @@
+﻿  InGame.cpp
+c:\users\diamm\documents\work\rhythm-game\rhythm-game\ingame.cpp(64): warning C4244: '=': conversion from 'int' to 'float', possible loss of data
+c:\users\diamm\documents\work\rhythm-game\rhythm-game\ingame.cpp(114): warning C4390: ';': empty controlled statement found; is this the intent?
+LINK : warning LNK4098: defaultlib 'MSVCRTD' conflicts with use of other libs; use /NODEFAULTLIB:library
+  Generating code
+  2 of 458 functions ( 0.4%) were compiled, the rest were copied from previous compilation.
+    0 functions were new in current compilation
+    0 functions had inline decision re-evaluated but remain unchanged
+  Finished generating code
+raylib.lib(audio.obj) : warning LNK4099: PDB 'raylib.pdb' was not found with 'raylib.lib(audio.obj)' or at 'C:\Users\diamm\Documents\Work\Rhythm-Game\x64\Release\raylib.pdb'; linking object as if no debug info
+raylib.lib(core.obj) : warning LNK4099: PDB 'raylib.pdb' was not found with 'raylib.lib(core.obj)' or at 'C:\Users\diamm\Documents\Work\Rhythm-Game\x64\Release\raylib.pdb'; linking object as if no debug info
+raylib.lib(shapes.obj) : warning LNK4099: PDB 'raylib.pdb' was not found with 'raylib.lib(shapes.obj)' or at 'C:\Users\diamm\Documents\Work\Rhythm-Game\x64\Release\raylib.pdb'; linking object as if no debug info
+raylib.lib(text.obj) : warning LNK4099: PDB 'raylib.pdb' was not found with 'raylib.lib(text.obj)' or at 'C:\Users\diamm\Documents\Work\Rhythm-Game\x64\Release\raylib.pdb'; linking object as if no debug info
+raylib.lib(textures.obj) : warning LNK4099: PDB 'raylib.pdb' was not found with 'raylib.lib(textures.obj)' or at 'C:\Users\diamm\Documents\Work\Rhythm-Game\x64\Release\raylib.pdb'; linking object as if no debug info
+raylib.lib(utils.obj) : warning LNK4099: PDB 'raylib.pdb' was not found with 'raylib.lib(utils.obj)' or at 'C:\Users\diamm\Documents\Work\Rhythm-Game\x64\Release\raylib.pdb'; linking object as if no debug info
+raylib.lib(mini_al.obj) : warning LNK4099: PDB 'raylib.pdb' was not found with 'raylib.lib(mini_al.obj)' or at 'C:\Users\diamm\Documents\Work\Rhythm-Game\x64\Release\raylib.pdb'; linking object as if no debug info
+raylib.lib(stb_vorbis.obj) : warning LNK4099: PDB 'raylib.pdb' was not found with 'raylib.lib(stb_vorbis.obj)' or at 'C:\Users\diamm\Documents\Work\Rhythm-Game\x64\Release\raylib.pdb'; linking object as if no debug info
+raylib.lib(context.obj) : warning LNK4099: PDB 'glfw_objlib.pdb' was not found with 'raylib.lib(context.obj)' or at 'C:\Users\diamm\Documents\Work\Rhythm-Game\x64\Release\glfw_objlib.pdb'; linking object as if no debug info
+raylib.lib(init.obj) : warning LNK4099: PDB 'glfw_objlib.pdb' was not found with 'raylib.lib(init.obj)' or at 'C:\Users\diamm\Documents\Work\Rhythm-Game\x64\Release\glfw_objlib.pdb'; linking object as if no debug info
+raylib.lib(input.obj) : warning LNK4099: PDB 'glfw_objlib.pdb' was not found with 'raylib.lib(input.obj)' or at 'C:\Users\diamm\Documents\Work\Rhythm-Game\x64\Release\glfw_objlib.pdb'; linking object as if no debug info
+raylib.lib(monitor.obj) : warning LNK4099: PDB 'glfw_objlib.pdb' was not found with 'raylib.lib(monitor.obj)' or at 'C:\Users\diamm\Documents\Work\Rhythm-Game\x64\Release\glfw_objlib.pdb'; linking object as if no debug info
+raylib.lib(vulkan.obj) : warning LNK4099: PDB 'glfw_objlib.pdb' was not found with 'raylib.lib(vulkan.obj)' or at 'C:\Users\diamm\Documents\Work\Rhythm-Game\x64\Release\glfw_objlib.pdb'; linking object as if no debug info
+raylib.lib(window.obj) : warning LNK4099: PDB 'glfw_objlib.pdb' was not found with 'raylib.lib(window.obj)' or at 'C:\Users\diamm\Documents\Work\Rhythm-Game\x64\Release\glfw_objlib.pdb'; linking object as if no debug info
+raylib.lib(win32_init.obj) : warning LNK4099: PDB 'glfw_objlib.pdb' was not found with 'raylib.lib(win32_init.obj)' or at 'C:\Users\diamm\Documents\Work\Rhythm-Game\x64\Release\glfw_objlib.pdb'; linking object as if no debug info
+raylib.lib(win32_joystick.obj) : warning LNK4099: PDB 'glfw_objlib.pdb' was not found with 'raylib.lib(win32_joystick.obj)' or at 'C:\Users\diamm\Documents\Work\Rhythm-Game\x64\Release\glfw_objlib.pdb'; linking object as if no debug info
+raylib.lib(win32_monitor.obj) : warning LNK4099: PDB 'glfw_objlib.pdb' was not found with 'raylib.lib(win32_monitor.obj)' or at 'C:\Users\diamm\Documents\Work\Rhythm-Game\x64\Release\glfw_objlib.pdb'; linking object as if no debug info
+raylib.lib(win32_time.obj) : warning LNK4099: PDB 'glfw_objlib.pdb' was not found with 'raylib.lib(win32_time.obj)' or at 'C:\Users\diamm\Documents\Work\Rhythm-Game\x64\Release\glfw_objlib.pdb'; linking object as if no debug info
+raylib.lib(win32_thread.obj) : warning LNK4099: PDB 'glfw_objlib.pdb' was not found with 'raylib.lib(win32_thread.obj)' or at 'C:\Users\diamm\Documents\Work\Rhythm-Game\x64\Release\glfw_objlib.pdb'; linking object as if no debug info
+raylib.lib(win32_window.obj) : warning LNK4099: PDB 'glfw_objlib.pdb' was not found with 'raylib.lib(win32_window.obj)' or at 'C:\Users\diamm\Documents\Work\Rhythm-Game\x64\Release\glfw_objlib.pdb'; linking object as if no debug info
+raylib.lib(wgl_context.obj) : warning LNK4099: PDB 'glfw_objlib.pdb' was not found with 'raylib.lib(wgl_context.obj)' or at 'C:\Users\diamm\Documents\Work\Rhythm-Game\x64\Release\glfw_objlib.pdb'; linking object as if no debug info
+raylib.lib(egl_context.obj) : warning LNK4099: PDB 'glfw_objlib.pdb' was not found with 'raylib.lib(egl_context.obj)' or at 'C:\Users\diamm\Documents\Work\Rhythm-Game\x64\Release\glfw_objlib.pdb'; linking object as if no debug info
+raylib.lib(osmesa_context.obj) : warning LNK4099: PDB 'glfw_objlib.pdb' was not found with 'raylib.lib(osmesa_context.obj)' or at 'C:\Users\diamm\Documents\Work\Rhythm-Game\x64\Release\glfw_objlib.pdb'; linking object as if no debug info
+  Rhythm-Game.vcxproj -> C:\Users\diamm\Documents\Work\Rhythm-Game\x64\Release\Rhythm-Game.exe

@@ -142,6 +142,7 @@
     <ClCompile Include="main.cpp" />
     <ClCompile Include="MainMenu.cpp" />
     <ClCompile Include="note.cpp" />
+    <ClCompile Include="Options.cpp" />
     <ClCompile Include="text.cpp" />
     <ClCompile Include="textStateMachine.cpp" />
     <ClCompile Include="timingText.cpp" />

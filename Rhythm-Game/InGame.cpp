@@ -6,10 +6,10 @@ gInGame::gInGame()
 
 	maxScore = 100000;
 
-	hitRegions.push_back(hitRegion(Rectangle{ 325,400,40,20 }, KEY_A));
-	hitRegions.push_back(hitRegion(Rectangle{ 375,400,40,20 }, KEY_S));
-	hitRegions.push_back(hitRegion(Rectangle{ 425,400,40,20 }, KEY_K));
-	hitRegions.push_back(hitRegion(Rectangle{ 475,400,40,20 }, KEY_L));
+	hitRegions.push_back(hitRegion(Rectangle{ 325,400,40,20 }, instance().key1));
+	hitRegions.push_back(hitRegion(Rectangle{ 375,400,40,20 }, instance().key2));
+	hitRegions.push_back(hitRegion(Rectangle{ 425,400,40,20 }, instance().key3));
+	hitRegions.push_back(hitRegion(Rectangle{ 475,400,40,20 }, instance().key4));
 }
 
 GameManager& gInGame::instance()
@@ -114,7 +114,8 @@ void gInGame::update()
 	if (!IsMusicPlaying(instance().music))
 	{
 		if (instance().combo > instance().highestCombo) instance().highestCombo = instance().combo;
-		GameState::GetInstance().setState(GameOver);
+		instance().start = false;
+		//GameState::GetInstance().setState(GameOver);
 	}
 }
 

@@ -5,10 +5,10 @@ gMainMenu::gMainMenu()
 	menuSelect = 0;
 	lastSelected = 0;
 
-	menuText.push_back(text(Vector2{ 100,50 }, "1. The Day", 40, ORANGE));
-	menuText.push_back(text(Vector2{ 100,100 }, "2. Great Days", 40, ORANGE));
-	menuText.push_back(text(Vector2{ 100,150 }, "3. Options", 40, ORANGE));
-	menuText.push_back(text(Vector2{ 100,200 }, "4. Exit", 40, ORANGE));
+	menuText.push_back(text(Vector2{ 100,50 }, "Great Days", 40, ORANGE));
+	menuText.push_back(text(Vector2{ 100,100 }, "The Days", 40, ORANGE));
+	menuText.push_back(text(Vector2{ 100,150 }, "Change Key Bindings", 40, ORANGE));
+	menuText.push_back(text(Vector2{ 100,200 }, "Exit", 40, ORANGE));
 }
 
 GameManager& gMainMenu::instance()
@@ -39,27 +39,28 @@ void gMainMenu::update()
 	
 		if (menuText[0].state() == Active)
 		{
-			instance().music = LoadMusicStream("TheDayShorter.ogg");
+			instance().music = LoadMusicStream("GreatDays.ogg");
 			instance().note.clear();
-			instance().note = instance().song1;
+			instance().note = instance().song2;
+			GameState::GetInstance().setState(InGame);
 		}
 		else if (menuText[1].state() == Active)
 		{
 			instance().bpm = 170;
-			instance().music = LoadMusicStream("GreatDays.ogg");
+			instance().music = LoadMusicStream("TheDayShorter.ogg");
 			SetMusicVolume(instance().music, 3.0f);
-			instance().note = instance().song2;
+			instance().note = instance().song1;
+			GameState::GetInstance().setState(InGame);
 		}
 		else if (menuText[2].state() == Active)
 		{
-
+ 			GameState::GetInstance().setState(Options);
 		}
 		else if (menuText[3].state() == Active)
 		{
 			GameState::GetInstance().setState(Exit);
 			return;
 		}
-		GameState::GetInstance().setState(InGame);
 		for (int i = 0; i < instance().note.size(); ++i) instance().note[i].pos.y = instance().offset;
 	}
 	if (IsKeyPressed(KEY_DOWN))

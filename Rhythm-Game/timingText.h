@@ -4,6 +4,7 @@ class timingText : public text
 {
 private:
 	bool pulse();
+	bool trackFinished();
 public:
 	timingText();
 	timingText(const string & _content, int fontSize, Color color);

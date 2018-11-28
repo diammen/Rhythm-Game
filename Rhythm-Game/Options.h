@@ -3,6 +3,9 @@
 class gOptions
 {
 private:
+	int menuSelect;
+	int lastSelected;
+	vector<text> menuText;
 public:
 	gOptions();
 	void update();

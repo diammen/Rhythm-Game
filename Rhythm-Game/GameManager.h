@@ -32,6 +32,10 @@ public:
 	int greatCount;				// number of greats achieved in the song
 	int missCount;				// number of misses in the song
 	int beatCount;
+	int key1;
+	int key2;
+	int key3;
+	int key4;
 
 	float spdMod;			// speed multiplier
 	float bpm;				// beats per minute

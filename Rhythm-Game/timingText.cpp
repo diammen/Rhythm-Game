@@ -33,7 +33,9 @@ void timingText::update(float delta)
 		pulse();
 		position.x = GetScreenWidth() / 2 - MeasureText(content.c_str(), size) / 2;
 		position.y = GetScreenHeight() / 2 - 50;
-
+		break;
+	case Finish:
+		trackFinished();
 		break;
 	}
 }
@@ -51,6 +53,28 @@ bool timingText::pulse()
 		return true;
 	}
 	else if (tick >= 0.1)
+	{
+		tick += 2 * deltaTime;
+		if (size > 50)
+			size -= 5;
+	}
+	else
+	{
+		tick += 2 * deltaTime;
+		if (size < 60)
+			size += 5;
+	}
+	return false;
+}
+
+bool timingText::trackFinished()
+{
+	if (tick >= 1)
+	{
+		stateMachine.setState(Idle);
+		return true;
+	}
+	else if (tick >= 0.5)
 	{
 		tick += 2 * deltaTime;
 		if (size > 50)
