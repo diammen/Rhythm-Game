@@ -1,2 +1,5 @@
-﻿  Options.cpp
-  Rhythm-Game.vcxproj -> C:\Users\diamm\Documents\Work\Rhythm-Game\x64\Debug\Rhythm-Game.exe
+﻿  MainMenu.cpp
+c:\users\s189072\source\repos\rhythm-game\rhythm-game\mainmenu.cpp(33): warning C4244: '*=': conversion from 'float' to 'int', possible loss of data
+c:\users\s189072\source\repos\rhythm-game\rhythm-game\mainmenu.cpp(64): warning C4244: '=': conversion from 'int' to 'float', possible loss of data
+c:\users\s189072\source\repos\rhythm-game\rhythm-game\mainmenu.cpp(73): warning C4267: '=': conversion from 'size_t' to 'int', possible loss of data
+  Rhythm-Game.vcxproj -> C:\Users\s189072\source\repos\Rhythm-Game\x64\Debug\Rhythm-Game.exe

@@ -26,7 +26,7 @@ void gMainMenu::update()
 	if (instance().spdMod < 1)
 		instance().spdMod = 1;
 	// when user presses space to advance
-	if (IsKeyPressed(KEY_SPACE))
+	if (IsKeyPressed(KEY_ENTER))
 	{
 		instance().start = true;
 	
@@ -95,7 +95,7 @@ void gMainMenu::update()
 
 void gMainMenu::draw()
 {
-	DrawText("Press space to play.", GetScreenWidth() / 2 - MeasureText("Press space to play.", 30) / 2, 400, 30, WHITE);
+	DrawText("Press enter to advance.", GetScreenWidth() / 2 - MeasureText("Press enter to advance.", 30) / 2, 400, 30, WHITE);
 	DrawText(FormatText("Speed Modifier: %.1fx", instance().spdMod), GetScreenWidth() / 2 - MeasureText(FormatText("Speed Modifier: %.1fx", instance().spdMod), 30) / 2, 350, 30, WHITE);
 	for (int i = 0; i < menuText.size(); ++i)
 	{

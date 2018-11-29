@@ -65,6 +65,9 @@ int main()
 		case InGame:
 			scene2.update();
 			break;
+		case Options:
+			scene3.update();
+			break;
 		case GameOver:
 			scene4.update();
 			break;

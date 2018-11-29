@@ -6,6 +6,8 @@ private:
 	int menuSelect;
 	int lastSelected;
 	vector<text> menuText;
+	vector<text> inputField;
+	vector<box> boxes;
 public:
 	gOptions();
 	void update();

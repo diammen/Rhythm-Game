@@ -10,6 +10,7 @@
 #include "note.h"
 #include "text.h"
 #include "timingText.h"
+#include "box.h"
 #include "hitRegion.h"
 #include "GameState.h"
 using std::vector;

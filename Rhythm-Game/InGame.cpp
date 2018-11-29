@@ -28,6 +28,7 @@ void gInGame::update()
 	{
 		PauseMusicStream(instance().music);
 	}
+	// pause music
 	if (IsKeyPressed(KEY_SPACE))
 	{
 		instance().start = !instance().start;
@@ -42,24 +43,28 @@ void gInGame::update()
 	// sync collisions and move notes
 	for (int i = 0; i < instance().note.size(); ++i)
 	{
+		// when it's time for note to go
 		if (!instance().note[i].active && !instance().note[i].hit && GetMusicTimePlayed(instance().music) >= instance().note[i].timeStamp)
 			instance().note[i].active = true;
-
+		// sync rectangle and collision box to position
 		instance().note[i].rec.y = instance().note[i].pos.y;
 		instance().note[i].col.y = instance().note[i].pos.y;
-
+		// when note reaches bottom of screen
 		if (instance().note[i].pos.y > instance().screenHeight && instance().note[i].active)
 		{
 			instance().note[i].active = false;
 			instance().note[i].hit = true;
-			if (instance().combo > instance().highestCombo) instance().highestCombo = instance().combo;
+			// reset combo
+			if (instance().combo > instance().highestCombo) instance().highestCombo = instance().combo; // set new highest combo if appropriate
 			instance().combo = 0;
+			// increment miss counter
 			instance().missCount++;
 			timeText->setSelected("Miss", RED);
 		}
+		// move note
 		if (instance().note[i].active && !instance().note[i].hit)
 			instance().note[i].translate(instance().speed);
-
+		// if note has been hit, set it aside
 		if (instance().note[i].hit)
 			instance().note[i].pos.y = instance().offset;
 	}
@@ -80,10 +85,12 @@ void gInGame::update()
 				{
 					instance().note[i].active = false;
 					instance().note[i].hit = true;
-					timeText->setSelected("Perfect!", GREEN);
+					timeText->setSelected("Perfect!", GREEN); // display perfect
 
+					// increment counters
 					instance().combo++;
 					instance().perfectCount++;
+					// calculate score
 					instance().hitAccuracy = 1.0f;
 					instance().score += (float)maxScore * instance().hitAccuracy / instance().note.size();
 					break;
@@ -91,12 +98,15 @@ void gInGame::update()
 				// if timing is not perfect
 				else if (CheckCollisionRecs(instance().note[i].rec, hitRegions[j].rec))
 				{
+					// disable note
 					instance().note[i].active = false;
 					instance().note[i].hit = true;
-					timeText->setSelected("Great!", SKYBLUE);
+					timeText->setSelected("Great!", SKYBLUE); // display great
 
+					// increment counters
 					instance().combo++;
 					instance().greatCount++;
+					// calculate score
 					instance().hitAccuracy = 0.80f;
 					instance().score += (float)maxScore * instance().hitAccuracy / instance().note.size();
 					break;
@@ -109,8 +119,11 @@ void gInGame::update()
 	{
 		instance().score = 100000;
 	}
+	// update text object
 	timeText->update(GetFrameTime());
+	// set music to play once
 	SetMusicLoopCount(instance().music, 0);
+	// once music stops playing
 	if (!IsMusicPlaying(instance().music))
 	{
 		if (instance().combo > instance().highestCombo) instance().highestCombo = instance().combo;
@@ -121,6 +134,7 @@ void gInGame::update()
 
 void gInGame::draw()
 {
+	// draw key points
 	for (int i = 0; i < hitRegions.size(); ++i)
 	{
 		hitRegions[i].draw();
@@ -133,9 +147,12 @@ void gInGame::draw()
 			DrawRectanglePro(instance().note[i].rec, Vector2{ 0,0 }, 0, WHITE);
 		}
 	}
+	// draw text object
 	timeText->draw();
+	// draw progress bar
 	DrawRectangle(0, instance().screenHeight - 10, (int)instance().timePlayed, 10, LIGHTBLUE);
 
+	// draw score and combo
 	DrawText(FormatText("SCORE: %i", (int)instance().score), 5, 5, 20, WHITE);
 	DrawText(FormatText("COMBO: %i", instance().combo), 5, 30, 20, WHITE);
 	DrawText(FormatText("Beat Count: %i", instance().beatCount), 5, 55, 20, WHITE);
