@@ -58,12 +58,14 @@ void gOptions::update()
 	}
 	if (IsKeyPressed(KEY_BACKSPACE))
 	{
+		// return to main menu
 		GameState::GetInstance().setState(MainMenu);
 	}
 	for (int i = 0; i < boxes.size(); ++i)
 	{
 		if (boxes[i].state() == Active)
 		{
+			// change key binds
 			key = GetKeyPressed();
 			if ((key >= 32) && (key <= 125) && (letterCount < 2))
 			{

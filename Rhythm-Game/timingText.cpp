@@ -20,6 +20,14 @@ void timingText::setSelected(string newText, Color newColor)
 	color = newColor;
 }
 
+void timingText::setFinish(string newText, Color newColor)
+{
+	tick = 0;
+	stateMachine.setState(Finish);
+	content = newText;
+	color = newColor;
+}
+
 void timingText::update(float delta)
 {
 	deltaTime = delta;
@@ -36,6 +44,8 @@ void timingText::update(float delta)
 		break;
 	case Finish:
 		trackFinished();
+		position.x = GetScreenWidth() / 2 - MeasureText(content.c_str(), size) / 2;
+		position.y = GetScreenHeight() / 2 - 50;
 		break;
 	}
 }
@@ -72,19 +82,18 @@ bool timingText::trackFinished()
 	if (tick >= 1)
 	{
 		stateMachine.setState(Idle);
+		trackDone = true;
 		return true;
 	}
 	else if (tick >= 0.5)
 	{
-		tick += 2 * deltaTime;
-		if (size > 50)
-			size -= 5;
+		tick += 1 * deltaTime;
 	}
 	else
 	{
-		tick += 2 * deltaTime;
-		if (size < 60)
-			size += 5;
+		tick += 1 * deltaTime;
+		if (size < 50)
+			size += 1;
 	}
 	return false;
 }

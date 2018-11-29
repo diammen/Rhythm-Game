@@ -39,6 +39,7 @@ void gMainMenu::update()
 	
 		if (menuText[0].state() == Active)
 		{
+			// load first song and start game
 			instance().music = LoadMusicStream("GreatDays.ogg");
 			instance().note.clear();
 			instance().note = instance().song2;
@@ -46,6 +47,7 @@ void gMainMenu::update()
 		}
 		else if (menuText[1].state() == Active)
 		{
+			// load second song and start game
 			instance().bpm = 170;
 			instance().music = LoadMusicStream("TheDayShorter.ogg");
 			SetMusicVolume(instance().music, 3.0f);
@@ -54,10 +56,12 @@ void gMainMenu::update()
 		}
 		else if (menuText[2].state() == Active)
 		{
+			// go to options
  			GameState::GetInstance().setState(Options);
 		}
 		else if (menuText[3].state() == Active)
 		{
+			// exit game
 			GameState::GetInstance().setState(Exit);
 			return;
 		}
