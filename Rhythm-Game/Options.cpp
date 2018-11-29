@@ -4,6 +4,8 @@ gOptions::gOptions()
 {
 	menuSelect = 0;
 	lastSelected = 0;
+	letterCount = 0;
+	key = 0;
 
 	menuText.push_back(text(Vector2{ 100,50 }, "Far Left:", 40, ORANGE));
 	menuText.push_back(text(Vector2{ 100,100 }, "Middle Left:", 40, ORANGE));
@@ -54,8 +56,21 @@ void gOptions::update()
 
 		boxes[menuSelect].setSelected(LIGHTGRAY);
 	}
+	if (IsKeyPressed(KEY_BACKSPACE))
+	{
+		GameState::GetInstance().setState(MainMenu);
+	}
 	for (int i = 0; i < boxes.size(); ++i)
 	{
+		if (boxes[i].state() == Active)
+		{
+			key = GetKeyPressed();
+			if ((key >= 32) && (key <= 125) && (letterCount < 2))
+			{
+				instance().keys[i] = toupper(key);
+				inputField[i].content = toupper(key);
+			}
+		}
 		boxes[i].update(GetFrameTime());
 	}
 }
@@ -68,4 +83,5 @@ void gOptions::draw()
 		menuText[i].draw();
 		inputField[i].draw();
 	}
+	DrawText("Press backspace to return to main menu.", GetScreenWidth() / 2 - MeasureText("Press backspace to return to main menu.", 30) / 2, 400, 30, WHITE);
 }

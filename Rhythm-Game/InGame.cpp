@@ -6,10 +6,10 @@ gInGame::gInGame()
 
 	maxScore = 100000;
 
-	hitRegions.push_back(hitRegion(Rectangle{ 325,400,40,20 }, instance().key1));
-	hitRegions.push_back(hitRegion(Rectangle{ 375,400,40,20 }, instance().key2));
-	hitRegions.push_back(hitRegion(Rectangle{ 425,400,40,20 }, instance().key3));
-	hitRegions.push_back(hitRegion(Rectangle{ 475,400,40,20 }, instance().key4));
+	hitRegions.push_back(hitRegion(Rectangle{ 325,400,40,20 }, instance().keys[0]));
+	hitRegions.push_back(hitRegion(Rectangle{ 375,400,40,20 }, instance().keys[1]));
+	hitRegions.push_back(hitRegion(Rectangle{ 425,400,40,20 }, instance().keys[2]));
+	hitRegions.push_back(hitRegion(Rectangle{ 475,400,40,20 }, instance().keys[3]));
 }
 
 GameManager& gInGame::instance()
@@ -20,6 +20,10 @@ GameManager& gInGame::instance()
 void gInGame::update()
 {
 	instance().timePlayed = GetMusicTimePlayed(instance().music) / GetMusicTimeLength(instance().music) * (instance().screenWidth);
+	for (int i = 0; i < hitRegions.size(); ++i)
+	{
+		hitRegions[i].keyBind = instance().keys[i];
+	}
 	if (instance().start)
 	{
 		PlayMusicStream(instance().music);
@@ -27,11 +31,6 @@ void gInGame::update()
 	else
 	{
 		PauseMusicStream(instance().music);
-	}
-	// pause music
-	if (IsKeyPressed(KEY_SPACE))
-	{
-		instance().start = !instance().start;
 	}
 	// beat counter
 	if (GetMusicTimePlayed(instance().music) > instance().lastBeat + instance().crotchet)
@@ -128,7 +127,7 @@ void gInGame::update()
 	{
 		if (instance().combo > instance().highestCombo) instance().highestCombo = instance().combo;
 		instance().start = false;
-		//GameState::GetInstance().setState(GameOver);
+		GameState::GetInstance().setState(GameOver);
 	}
 }
 
@@ -153,8 +152,8 @@ void gInGame::draw()
 	DrawRectangle(0, instance().screenHeight - 10, (int)instance().timePlayed, 10, LIGHTBLUE);
 
 	// draw score and combo
-	DrawText(FormatText("SCORE: %i", (int)instance().score), 5, 5, 20, WHITE);
-	DrawText(FormatText("COMBO: %i", instance().combo), 5, 30, 20, WHITE);
-	DrawText(FormatText("Beat Count: %i", instance().beatCount), 5, 55, 20, WHITE);
-	DrawText(FormatText("Beat Position: %f", instance().lastBeat), 5, 80, 20, WHITE);
+	DrawText(FormatText("SCORE: %i", (int)instance().score), 10, 5, 30, WHITE);
+	DrawText(FormatText("COMBO: %i", instance().combo), 10, 40, 30, WHITE);
+	//DrawText(FormatText("Beat Count: %i", instance().beatCount), 5, 55, 20, WHITE);
+	//DrawText(FormatText("Beat Position: %f", instance().lastBeat), 5, 80, 20, WHITE);
 }

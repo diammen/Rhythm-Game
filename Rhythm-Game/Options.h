@@ -5,6 +5,9 @@ class gOptions
 private:
 	int menuSelect;
 	int lastSelected;
+	int letterCount;
+	int key;
+
 	vector<text> menuText;
 	vector<text> inputField;
 	vector<box> boxes;

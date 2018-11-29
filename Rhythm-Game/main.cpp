@@ -40,14 +40,14 @@ int main()
 	int screenHeight = 450;
 	bool exit = false;
 
+	InitWindow(screenWidth, screenHeight, "ray!mania");
+
+	InitAudioDevice();
+
 	gMainMenu scene1;
 	gInGame scene2;
 	gOptions scene3;
 	gGameOver scene4;
-
-	InitWindow(screenWidth, screenHeight, "ray!mania");
-
-	InitAudioDevice();
 
 	SetTargetFPS(60);
 	//--------------------------------------------------------------------------------------

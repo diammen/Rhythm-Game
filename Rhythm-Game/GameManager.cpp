@@ -17,6 +17,10 @@ GameManager::GameManager()
 	key2 = KEY_S;
 	key3 = KEY_K;
 	key4 = KEY_L;
+	keys[0] = KEY_A;
+	keys[1] = KEY_S;
+	keys[2] = KEY_K;
+	keys[3] = KEY_L;
 
 	spdMod = 1.0f;			// speed multiplier
 	bpm = 186;				// beats per minute
@@ -35,7 +39,7 @@ GameManager::GameManager()
 	song2 = vReadFile("GreatDays.txt");
 	songTest = vReadFile("test.txt");
 
-	//music = LoadMusicStream("GreatDays.ogg");
+	music = LoadMusicStream("GreatDays.ogg");
 
 }
 
