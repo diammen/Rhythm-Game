@@ -35,8 +35,9 @@ GameManager::GameManager()
 
 	start = false;
 
-	song1 = vReadFile("TheDay.txt");
 	song2 = vReadFile("GreatDays.txt");
+	song1 = vReadFile("TheDay.txt");
+
 	songTest = vReadFile("test.txt");
 
 	music = LoadMusicStream("GreatDays.ogg");

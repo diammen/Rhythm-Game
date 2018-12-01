@@ -28,6 +28,12 @@ void timingText::setFinish(string newText, Color newColor)
 	color = newColor;
 }
 
+void timingText::setBeat()
+{
+	tick = 0;
+	stateMachine.setState(Beat);
+}
+
 void timingText::update(float delta)
 {
 	deltaTime = delta;
@@ -41,6 +47,11 @@ void timingText::update(float delta)
 		pulse();
 		position.x = GetScreenWidth() / 2 - MeasureText(content.c_str(), size) / 2;
 		position.y = GetScreenHeight() / 2 - 50;
+		break;
+	case Beat:
+		pulse();
+		position.x = 100;
+		position.y = 400;
 		break;
 	case Finish:
 		trackFinished();

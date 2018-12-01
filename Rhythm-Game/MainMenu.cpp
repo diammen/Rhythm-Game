@@ -9,6 +9,7 @@ gMainMenu::gMainMenu()
 	menuText.push_back(text(Vector2{ 100,100 }, "The Days", 40, ORANGE));
 	menuText.push_back(text(Vector2{ 100,150 }, "Change Key Bindings", 40, ORANGE));
 	menuText.push_back(text(Vector2{ 100,200 }, "Exit", 40, ORANGE));
+	Transition::GetInstance().entering = true;
 }
 
 GameManager& gMainMenu::instance()
@@ -19,6 +20,7 @@ GameManager& gMainMenu::instance()
 void gMainMenu::update()
 {
 	// change speed modifier based on keyboard input
+	Transition::GetInstance().Fade();
 	if (IsKeyPressed(KEY_RIGHT))
 		instance().spdMod += 0.1f;
 	if (IsKeyPressed(KEY_LEFT))
@@ -32,7 +34,6 @@ void gMainMenu::update()
 	
 		instance().speed *= instance().spdMod; // multiply speed by modifier
 		instance().offset = calculateOffset(400, instance().speed, 2) - 5; // calculate offset based on new speed
-		instance().crotchet = 60 / instance().bpm; // calculate time duration of each beat
 	
 		instance().beatCount = 0;
 		instance().lastBeat = 0;
@@ -40,6 +41,8 @@ void gMainMenu::update()
 		if (menuText[0].state() == Active)
 		{
 			// load first song and start game
+			instance().bpm = 170;
+			instance().crotchet = 60 / instance().bpm; // calculate time duration of each beat
 			instance().music = LoadMusicStream("GreatDays.ogg");
 			instance().note.clear();
 			instance().note = instance().song2;
@@ -48,9 +51,9 @@ void gMainMenu::update()
 		else if (menuText[1].state() == Active)
 		{
 			// load second song and start game
-			instance().bpm = 170;
+			instance().crotchet = 60 / instance().bpm; // calculate time duration of each beat
 			instance().music = LoadMusicStream("TheDayShorter.ogg");
-			SetMusicVolume(instance().music, 3.0f);
+			//SetMusicVolume(instance().music, 3.0f);
 			instance().note = instance().song1;
 			GameState::GetInstance().setState(InGame);
 		}

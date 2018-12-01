@@ -35,7 +35,7 @@ void hitRegion::update()
 	if (IsKeyReleased(keyBind))
 	{
 		currentColor = idleColor;
-	}
+	}	
 }
 
 void hitRegion::draw()

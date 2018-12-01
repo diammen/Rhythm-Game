@@ -37,6 +37,12 @@ void gInGame::update()
 	{
 		instance().lastBeat += instance().crotchet;
 		instance().beatCount++;
+
+		//beat reset  4 beats per measure
+		if (instance().beatCount == 4)
+		{
+			instance().beatCount = 0;
+		}
 	}
 	UpdateMusicStream(instance().music);
 	// sync collisions and move notes
@@ -44,7 +50,10 @@ void gInGame::update()
 	{
 		// when it's time for note to go
 		if (!instance().note[i].active && !instance().note[i].hit && GetMusicTimePlayed(instance().music) >= instance().note[i].timeStamp)
+		{
+			//std::cout << "diff @ " << std::to_string(instance().note[i].timeStamp - GetMusicTimePlayed(instance().music)) << "s" << std::endl;
 			instance().note[i].active = true;
+		}
 		// sync rectangle and collision box to position
 		instance().note[i].rec.y = instance().note[i].pos.y;
 		instance().note[i].col.y = instance().note[i].pos.y;
@@ -154,6 +163,6 @@ void gInGame::draw()
 	// draw score and combo
 	DrawText(FormatText("SCORE: %i", (int)instance().score), 10, 5, 30, WHITE);
 	DrawText(FormatText("COMBO: %i", instance().combo), 10, 40, 30, WHITE);
-	//DrawText(FormatText("Beat Count: %i", instance().beatCount), 5, 55, 20, WHITE);
-	//DrawText(FormatText("Beat Position: %f", instance().lastBeat), 5, 80, 20, WHITE);
+	DrawText(FormatText("Beat Count: %i", instance().beatCount + 1), 5, 65, 20, WHITE);
+	DrawText(FormatText("Beat Position: %f", instance().lastBeat), 5, 95, 20, WHITE);
 }

@@ -27,12 +27,20 @@ vector<note> vReadFile(string filePath)
 	{
 		note temp;
 		songFile >> temp.rec.x >> temp.timeStamp;
+
+
+		//visuals
 		temp.rec.x = 325 + 50 * (temp.rec.x - 1);
 		temp.rec.y = 0;
+
 		temp.pos.x = temp.rec.x;
 		temp.pos.y = temp.rec.y;
+
 		temp.col.x = temp.rec.x;
+		
+
 		temp.totalNotes = size;
+		
 		temp.active = false;
 		temp.hit = false;
 		notes.push_back(temp);

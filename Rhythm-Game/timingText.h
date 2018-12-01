@@ -12,6 +12,7 @@ public:
 
 	void setSelected(string newText, Color newColor);
 	void setFinish(string newText, Color newColor);
+	void setBeat();
 
 	void update(float delta);
 	void draw();

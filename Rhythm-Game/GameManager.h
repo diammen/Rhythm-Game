@@ -13,6 +13,7 @@
 #include "box.h"
 #include "hitRegion.h"
 #include "GameState.h"
+#include "Transition.h"
 using std::vector;
 #define LIGHTPINK CLITERAL{ 255, 180, 255, 255 }
 #define LIGHTBLUE CLITERAL{ 180, 255, 255, 255 }

@@ -4,7 +4,8 @@ enum states
 	Idle = 0,
 	Active,
 	Return,
-	Finish
+	Finish,
+	Beat
 };
 class textSM
 {
