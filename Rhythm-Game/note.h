@@ -17,7 +17,7 @@ public:
 	int totalNotes;
 	float timeStamp;
 
-	void translate(int speed);
+	void translate(int startPos, int endPos, float time);
 
 	// ctors & dtors
 	note();

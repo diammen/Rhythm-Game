@@ -5,11 +5,6 @@
 #include <fstream>
 #include <string>
 #include <vector>
-#include "helper.h"
-#include "note.h"
-#include "text.h"
-#include "timingText.h"
-#include "hitRegion.h"
 #include "GameState.h"
 #include "MainMenu.h"
 #include "Options.h"
