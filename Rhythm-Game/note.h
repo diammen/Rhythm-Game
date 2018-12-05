@@ -16,8 +16,9 @@ public:
 	bool hit;
 	int totalNotes;
 	float timeStamp;
+	float lastReportedSonghead;
 
-	void translate(int startPos, int endPos, float time);
+	void translate(float speed);
 
 	// ctors & dtors
 	note();

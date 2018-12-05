@@ -1,3 +1,3 @@
 ﻿  InGame.cpp
-c:\users\diamm\documents\work\rhythm-game\rhythm-game\ingame.cpp(78): warning C4244: '=': conversion from 'int' to 'float', possible loss of data
+c:\users\diamm\documents\work\rhythm-game\rhythm-game\ingame.cpp(80): warning C4244: '=': conversion from 'int' to 'float', possible loss of data
   Rhythm-Game.vcxproj -> C:\Users\diamm\Documents\Work\Rhythm-Game\x64\Debug\Rhythm-Game.exe

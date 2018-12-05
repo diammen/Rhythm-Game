@@ -26,7 +26,6 @@ class GameManager
 public:
 	int screenWidth = 800;
 	int screenHeight = 450;
-	int speed;					// base speed of a note is 200 pixels per second
 	int offset;					// offset on note position based on speed
 	int combo;
 	int highestCombo;			// highest combo achieved in the song
@@ -40,6 +39,7 @@ public:
 	int key4;
 	int keys[4];
 
+	float speed;					// base speed of a note is 200 pixels per second
 	float spdMod;				// speed multiplier
 	float bpm;					// beats per minute
 	float crotchet;				// time duration of a beat

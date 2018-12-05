@@ -49,10 +49,11 @@ void gInGame::update()
 	for (int i = 0; i < instance().note.size(); ++i)
 	{
 		// when it's time for note to go
-		if (!instance().note[i].active && !instance().note[i].hit && GetMusicTimePlayed(instance().music) >= instance().note[i].timeStamp + 2)
+		if (!instance().note[i].active && !instance().note[i].hit && GetMusicTimePlayed(instance().music) >= instance().note[i].timeStamp)
 		{
-			//std::cout << "diff @ " << std::to_string(instance().note[i].timeStamp - GetMusicTimePlayed(instance().music)) << "s" << std::endl;
+			std::cout << "diff @ " << std::to_string(instance().note[i].timeStamp - GetMusicTimePlayed(instance().music)) << "s" << std::endl;
 			instance().note[i].active = true;
+			instance().note[i].lastReportedSonghead = GetMusicTimePlayed(instance().music);
 		}
 		// sync rectangle and collision box to position
 		instance().note[i].rec.y = instance().note[i].pos.y;
@@ -71,8 +72,9 @@ void gInGame::update()
 		}
 		// move note
 		if (instance().note[i].active && !instance().note[i].hit)
-			//instance().note[i].translate(0, 400, GetFrameTime());
-			instance().note[i].pos.y = (GetMusicTimePlayed(instance().music) - instance().note[i].timeStamp + 2) * instance().lastBeat + (instance().note[i].timeStamp + 2);
+			instance().note[i].translate(instance().speed);
+			//instance().note[i].pos.y = (GetMusicTimePlayed(instance().music) - instance().note[i].timeStamp + 2) * instance().lastBeat + (instance().note[i].timeStamp + 2);
+			//instance().note[i].pos.y += 10 * instance().crotchet;
 		// if note has been hit, set it aside
 		if (instance().note[i].hit)
 			instance().note[i].pos.y = instance().offset;

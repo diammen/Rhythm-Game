@@ -14,7 +14,7 @@ note::~note()
 
 }
 
-void note::translate(int startPos, int endPos, float time)
+void note::translate(float speed)
 {
-	pos.y = (endPos - startPos) * time;
+	pos.y += speed * GetFrameTime();
 }
