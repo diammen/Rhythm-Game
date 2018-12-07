@@ -33,7 +33,7 @@ void gMainMenu::update()
 		instance().start = true;
 	
 		instance().speed *= instance().spdMod; // multiply speed by modifier
-		instance().offset = calculateOffset(400, instance().speed, 2) - 5; // calculate offset based on new speed
+		instance().offset = calculateOffset(400, instance().speed, 2); // calculate offset based on new speed
 	
 		instance().beatCount = 0;
 		instance().lastBeat = 0;
@@ -68,7 +68,12 @@ void gMainMenu::update()
 			GameState::GetInstance().setState(Exit);
 			return;
 		}
-		for (int i = 0; i < instance().note.size(); ++i) instance().note[i].pos.y = instance().offset;
+		for (int i = 0; i < instance().note.size(); ++i)
+		{
+			instance().note[i].pos.y -= instance().note[i].timeStamp * instance().speed;
+			instance().note[i].pos.y += instance().offset;
+			instance().note[i].active = true;
+		}
 	}
 	if (IsKeyPressed(KEY_DOWN))
 	{
