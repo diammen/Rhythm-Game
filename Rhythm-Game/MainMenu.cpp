@@ -70,8 +70,8 @@ void gMainMenu::update()
 		}
 		for (int i = 0; i < instance().note.size(); ++i)
 		{
-			instance().note[i].pos.y -= instance().note[i].timeStamp * instance().speed;
-			instance().note[i].pos.y += instance().offset;
+			instance().note[i].pos.y = -instance().note[i].timeStamp * instance().speed;
+			instance().note[i].pos.y += instance().offset + 5;
 			instance().note[i].active = true;
 		}
 	}

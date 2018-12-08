@@ -31,13 +31,12 @@ vector<note> vReadFile(string filePath)
 
 		//visuals
 		temp.rec.x = 325 + 50 * (temp.rec.x - 1);
-		temp.rec.y = 0;
+		temp.rec.y = -20;
 
 		temp.pos.x = temp.rec.x;
 		temp.pos.y = temp.rec.y;
 
 		temp.col.x = temp.rec.x;
-		
 
 		temp.totalNotes = size;
 		
