@@ -9,12 +9,12 @@ bool Transition::Fade()
 {
 	if (entering)
 	{
-		tick+= 1 * GetFrameTime();
-		if (tick >= 1.0f)
+		elapsed+= 1 * GetFrameTime();
+		if (elapsed >= 1.0f)
 		{
 			return true;
 		}
-		else if (tick >= 0.1f)
+		else if (elapsed >= 0.1f)
 		{
 			color.a = 0;
 		}

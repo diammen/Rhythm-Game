@@ -8,7 +8,7 @@ private:
 	void operator=(Transition const&) {}
 	Rectangle rec;
 	Color color;
-	int tick;
+	int elapsed;
 public:
 	bool entering;
 	bool Fade();

@@ -77,7 +77,7 @@ void gInGame::update()
 			//instance().note[i].pos.y += 10 * instance().crotchet;
 		// if note has been hit, set it aside
 		if (instance().note[i].hit)
-			instance().note[i].pos.y = instance().offset;
+			instance().note[i].pos.y = (float)instance().offset;
 	}
 	// activate one hit region based on input
 	for (int i = 0; i < hitRegions.size(); ++i)

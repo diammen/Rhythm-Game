@@ -1,4 +1,5 @@
-﻿  MainMenu.cpp
-c:\users\s189072\source\repos\rhythm-game\rhythm-game\mainmenu.cpp(36): warning C4244: 'argument': conversion from 'float' to 'int', possible loss of data
-c:\users\s189072\source\repos\rhythm-game\rhythm-game\mainmenu.cpp(85): warning C4267: '=': conversion from 'size_t' to 'int', possible loss of data
+﻿  text.cpp
+c:\users\s189072\source\repos\rhythm-game\rhythm-game\text.cpp(9): warning C4244: '=': conversion from 'float' to 'int', possible loss of data
+c:\users\s189072\source\repos\rhythm-game\rhythm-game\text.cpp(76): warning C4244: '=': conversion from 'int' to 'float', possible loss of data
+c:\users\s189072\source\repos\rhythm-game\rhythm-game\text.cpp(94): warning C4244: 'argument': conversion from 'float' to 'int', possible loss of data
   Rhythm-Game.vcxproj -> C:\Users\s189072\source\repos\Rhythm-Game\x64\Debug\Rhythm-Game.exe

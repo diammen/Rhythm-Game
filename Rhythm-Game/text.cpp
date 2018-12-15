@@ -1,4 +1,5 @@
 #include "Text.h"
+#include "helper.h"
 
 text::text() {}
 
@@ -9,18 +10,19 @@ text::text(Vector2 _position, const string & _content, int _size, Color _color)
 	content = _content;
 	size = _size;
 	color = _color;
-	tick = 0;
+	elapsed = 0;
+	duration = 0.2f;
 }
 
 bool text::moveForward()
 {
-	if (tick >= 0.2)
+	if (elapsed >= 0.2)
 	{
 		return true;
 	}
 	else
 	{
-		tick+= 1 * deltaTime;
+		elapsed+= 1 * deltaTime;
 		if (position.x < defaultX + 50)
 			position.x += 4;
 	}
@@ -29,13 +31,13 @@ bool text::moveForward()
 
 bool text::moveBack()
 {
-	if (tick >= 0.2)
+	if (elapsed >= 0.2)
 	{
 		return true;
 	}
 	else
 	{
-		tick+= 1 * deltaTime;
+		elapsed+= 1 * deltaTime;
 		if (position.x > defaultX)
 			position.x -= 4;
 	}
@@ -49,7 +51,7 @@ states text::state()
 
 void text::setSelected()
 {
-	tick = 0;
+	elapsed = 0;
 	stateMachine.setState(Active);
 }
 
@@ -72,13 +74,13 @@ void text::update(float delta)
 	{
 	case Idle:
 		position.x = defaultX;
-		tick = 0;
+		elapsed = 0;
 		break;
 	case Active:
 		moveForward();
 		break;
 	case Return:
-		tick = 0;
+		elapsed = 0;
 		if (moveBack())
 		{
 			reset();

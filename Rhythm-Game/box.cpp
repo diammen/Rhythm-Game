@@ -10,7 +10,7 @@ box::box(Color _color, Rectangle _rec)
 
 void box::setSelected(Color newColor)
 {
-	tick = 0;
+	elapsed = 0;
 	stateMachine.setState(Active);
 	color = newColor;
 }

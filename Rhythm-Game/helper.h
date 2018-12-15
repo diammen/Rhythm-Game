@@ -26,3 +26,10 @@ char calculateRank(int score);
 // x = time to reach target position in seconds
 // b = offset
 int calculateOffset(int y, int m, int x);
+
+// Linearly interpolate between two values
+template <typename T>
+T lerp(const T& a, const T& b, float t)
+{
+	return a + (b - a) * t;
+}

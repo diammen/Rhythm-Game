@@ -37,7 +37,7 @@ void gOptions::update()
 		boxes[lastSelected].reset(); // set the previously chosen option back
 
 		if (menuSelect > menuText.size() - 1) // clamp menuSelect to amount of options
-			menuSelect = menuText.size() - 1;
+			menuSelect = (int)menuText.size() - 1;
 
 		lastSelected = menuSelect; // set last chosen option to currently selected
 

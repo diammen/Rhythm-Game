@@ -33,7 +33,7 @@ void gMainMenu::update()
 		instance().start = true;
 	
 		instance().speed *= instance().spdMod; // multiply speed by modifier
-		instance().offset = calculateOffset(400, instance().speed, 2); // calculate offset based on new speed
+		instance().offset = calculateOffset(400, (int)instance().speed, 2); // calculate offset based on new speed
 	
 		instance().beatCount = 0;
 		instance().lastBeat = 0;
@@ -82,7 +82,7 @@ void gMainMenu::update()
 		menuText[lastSelected].setReturn(); // set the previously chosen option back
 	
 		if (menuSelect > menuText.size() - 1) // clamp menuSelect to amount of options
-			menuSelect = menuText.size() - 1;
+			menuSelect = (int)menuText.size() - 1;
 	
 		lastSelected = menuSelect; // set last chosen option to currently selected
 	

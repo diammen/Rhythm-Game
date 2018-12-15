@@ -9,12 +9,13 @@ timingText::timingText(const string & _content, int _size, Color _color)
 	content = _content;
 	size = _size;
 	color = _color;
-	tick = 0;
+	elapsed = 0;
+	duration = 0;
 }
 
 void timingText::setSelected(string newText, Color newColor)
 {
-	tick = 0;
+	elapsed = 0;
 	stateMachine.setState(Active);
 	content = newText;
 	color = newColor;
@@ -22,7 +23,7 @@ void timingText::setSelected(string newText, Color newColor)
 
 void timingText::setFinish(string newText, Color newColor)
 {
-	tick = 0;
+	elapsed = 0;
 	stateMachine.setState(Finish);
 	content = newText;
 	color = newColor;
@@ -30,7 +31,7 @@ void timingText::setFinish(string newText, Color newColor)
 
 void timingText::setBeat()
 {
-	tick = 0;
+	elapsed = 0;
 	stateMachine.setState(Beat);
 }
 
@@ -40,7 +41,7 @@ void timingText::update(float delta)
 	switch (stateMachine.getState())
 	{
 	case Idle:
-		tick = 0;
+		elapsed = 0;
 		size = 50;
 		break;
 	case Active:
@@ -68,20 +69,20 @@ void timingText::draw()
 
 bool timingText::pulse()
 {
-	if (tick >= 0.2)
+	if (elapsed >= 0.2)
 	{
 		stateMachine.setState(Idle);
 		return true;
 	}
-	else if (tick >= 0.1)
+	else if (elapsed >= 0.1)
 	{
-		tick += 2 * deltaTime;
+		elapsed += 2 * deltaTime;
 		if (size > 50)
 			size -= 5;
 	}
 	else
 	{
-		tick += 2 * deltaTime;
+		elapsed += 2 * deltaTime;
 		if (size < 60)
 			size += 5;
 	}
@@ -90,19 +91,19 @@ bool timingText::pulse()
 
 bool timingText::trackFinished()
 {
-	if (tick >= 1)
+	if (elapsed >= 1)
 	{
 		stateMachine.setState(Idle);
 		trackDone = true;
 		return true;
 	}
-	else if (tick >= 0.5)
+	else if (elapsed >= 0.5)
 	{
-		tick += 1 * deltaTime;
+		elapsed += 1 * deltaTime;
 	}
 	else
 	{
-		tick += 1 * deltaTime;
+		elapsed += 1 * deltaTime;
 		if (size < 50)
 			size += 1;
 	}

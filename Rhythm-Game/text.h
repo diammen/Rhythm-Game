@@ -10,7 +10,8 @@ private:
 	bool moveForward();
 	bool moveBack();
 protected:
-	float tick;
+	float elapsed;
+	float duration;
 	textSM stateMachine;
 public:
 	Vector2 position;

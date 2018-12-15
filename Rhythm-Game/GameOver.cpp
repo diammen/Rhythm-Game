@@ -25,7 +25,7 @@ void gGameOver::draw()
 	DrawText(FormatText("MISSES: %i", instance().missCount), 50, GetScreenHeight() / 2, 40, WHITE);
 	DrawText("Press R to return to the main menu.", GetScreenWidth() / 2 - MeasureText("Press R to return to the main menu.", 30) / 2, 400, 30, WHITE);
 
-	DrawText(FormatText("%c", calculateRank(instance().score)), GetScreenWidth() / 2 - MeasureText(FormatText("%c", calculateRank(instance().score)), 50) / 2 + 250, GetScreenHeight() / 2 - 200, 150, BLUE);
+	DrawText(FormatText("%c", calculateRank(instance().score)), GetScreenWidth() / 2 - (float)MeasureText(FormatText("%c", calculateRank(instance().score)), 50) / 2 + 250, GetScreenHeight() / 2 - 200, 150, BLUE);
 }
 
 void gGameOver::reset()
