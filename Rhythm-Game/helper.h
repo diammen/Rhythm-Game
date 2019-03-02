@@ -6,17 +6,14 @@
 #include <fstream>
 #include <string>
 #include <vector>
-#include "helper.h"
+#include <regex>
 #include "note.h"
-#include "text.h"
-#include "timingText.h"
-#include "hitRegion.h"
-#include "GameState.h"
-#include "GameManager.h"
 using std::string;
 using std::vector;
 
 vector<note> vReadFile(string filePath);
+
+void loadTheme(string filePath);
 
 char calculateRank(int score);
 

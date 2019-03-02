@@ -146,6 +146,7 @@
     <ClCompile Include="Options.cpp" />
     <ClCompile Include="text.cpp" />
     <ClCompile Include="textStateMachine.cpp" />
+    <ClCompile Include="Theme.cpp" />
     <ClCompile Include="timingText.cpp" />
     <ClCompile Include="Transition.cpp" />
   </ItemGroup>
@@ -162,6 +163,7 @@
     <ClInclude Include="Options.h" />
     <ClInclude Include="text.h" />
     <ClInclude Include="textStateMachine.h" />
+    <ClInclude Include="Theme.h" />
     <ClInclude Include="timingText.h" />
     <ClInclude Include="Transition.h" />
   </ItemGroup>

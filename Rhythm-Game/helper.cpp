@@ -52,6 +52,15 @@ vector<note> vReadFile(string filePath)
 	return notes;
 }
 
+void loadTheme(string filePath)
+{
+	using namespace std;
+
+	fstream file;
+
+
+}
+
 char calculateRank(int score)
 {
 	if (score >= 95000) return 'S';

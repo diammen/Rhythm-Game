@@ -1,5 +1,6 @@
 #pragma once
 #include <raylib.h>
+#include "helper.h"
 class Transition
 {
 private:
@@ -8,7 +9,8 @@ private:
 	void operator=(Transition const&) {}
 	Rectangle rec;
 	Color color;
-	int elapsed;
+	float elapsed;
+	float duration;
 public:
 	bool entering;
 	bool Fade();
