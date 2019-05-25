@@ -6,7 +6,7 @@ gMainMenu::gMainMenu()
 	lastSelected = 0;
 
 	menuText.push_back(text(Vector2{ 100,50 }, "Great Days", 40, ORANGE));
-	menuText.push_back(text(Vector2{ 100,100 }, "The Days", 40, ORANGE));
+	menuText.push_back(text(Vector2{ 100,100 }, "The Day", 40, ORANGE));
 	menuText.push_back(text(Vector2{ 100,150 }, "Change Key Bindings", 40, ORANGE));
 	menuText.push_back(text(Vector2{ 100,200 }, "Exit", 40, ORANGE));
 	Transition::GetInstance().entering = true;

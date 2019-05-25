@@ -1,5 +1,7 @@
 #include "Theme.h"
 
+theme::theme() {}
+
 theme::~theme() {}
 
 theme& theme::GetInstance()

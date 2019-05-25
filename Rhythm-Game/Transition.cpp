@@ -23,6 +23,7 @@ bool Transition::Fade()
 			color.a++;
 		}
 	}
+	return false;
 }
 
 bool Transition::Slide()

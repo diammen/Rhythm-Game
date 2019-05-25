@@ -16,32 +16,24 @@ text::text(Vector2 _position, const string & _content, int _size, Color _color)
 
 bool text::moveForward()
 {
-	if (elapsed >= 0.2)
-	{
-		return true;
-	}
-	else
-	{
-		elapsed+= 1 * deltaTime;
-		if (position.x < defaultX + 50)
-			position.x += 4;
-	}
-	return false;
+	elapsed += 1 * deltaTime;
+	if (position.x < defaultX + 50)
+		position.x = lerp(defaultX, defaultX + 50, (elapsed / duration) > 1 ? 1 : (elapsed / duration));
+	return true;
 }
 
 bool text::moveBack()
 {
-	if (elapsed >= 0.2)
+	elapsed += 1 * deltaTime;
+	if (position.x > defaultX)
 	{
-		return true;
+		position.x = lerp(defaultX + 50, defaultX, (elapsed / duration) > 1 ? 1 : (elapsed / duration));
+		return false;
 	}
 	else
 	{
-		elapsed+= 1 * deltaTime;
-		if (position.x > defaultX)
-			position.x -= 4;
+		return true;
 	}
-	return false;
 }
 
 states text::state()
@@ -59,6 +51,7 @@ void text::setSelected(string newText, Color newColor) {}
 
 void text::setReturn()
 {
+	elapsed = 0;
 	stateMachine.setState(Return);
 }
 
@@ -80,7 +73,6 @@ void text::update(float delta)
 		moveForward();
 		break;
 	case Return:
-		elapsed = 0;
 		if (moveBack())
 		{
 			reset();
