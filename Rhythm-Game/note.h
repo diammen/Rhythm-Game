@@ -12,13 +12,16 @@ public:
 	Rectangle rec;
 	Rectangle col;
 	Vector2 pos;
+	Vector2 startPos;
 	bool active;
 	bool hit;
 	int totalNotes;
 	float timeStamp;
+	float elapsed;
+	float duration;
 	float lastReportedSonghead;
 
-	void translate(float speed);
+	void translate(float speed, float targetY);
 
 	// ctors & dtors
 	note();

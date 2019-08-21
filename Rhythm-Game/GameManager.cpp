@@ -5,7 +5,7 @@ GameManager::GameManager()
 
 	screenWidth = 800;
 	screenHeight = 450;
-	speed = 200;				// base speed of a note is 200 pixels per second
+	speed = 2;				// base speed of a note is 200 pixels per second
 	offset = 0;					// offset on note position based on speed
 	combo = 0;
 	highestCombo = 0;			// highest combo achieved in the song

@@ -1,4 +1,5 @@
 #include "note.h"
+#include "helper.h"
 
 note::note()
 {
@@ -6,7 +7,14 @@ note::note()
 	rec.height = 20;
 	col.width = 40;
 	col.height = 20;
-	active = true;
+
+	startPos.x = 0;
+	startPos.y = 0;
+
+	elapsed = 0;
+	duration = 2;
+
+	active = false;
 }
 
 note::~note()
@@ -14,7 +22,12 @@ note::~note()
 
 }
 
-void note::translate(float speed)
+void note::translate(float speed, float targetY)
 {
-	pos.y += speed * GetFrameTime();
+	//pos.y += speed * GetFrameTime();
+	if (pos.y != targetY) 
+	{
+		elapsed += GetFrameTime();
+		pos.y = lerp(startPos.y, targetY, (elapsed / duration) > 1 ? 1 : (elapsed / duration));
+	}
 }

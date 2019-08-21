@@ -45,7 +45,7 @@ void gMainMenu::update()
 			instance().crotchet = 60 / instance().bpm; // calculate time duration of each beat
 			instance().music = LoadMusicStream("GreatDays.ogg");
 			instance().note.clear();
-			instance().note = instance().song2;
+			instance().note = instance().songTest;
 			GameState::GetInstance().setState(InGame);
 		}
 		else if (menuText[1].state() == Active)
